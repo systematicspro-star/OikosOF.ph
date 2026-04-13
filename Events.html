@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - Oikos Orchard & Farm</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="./assets/images/OikosOF.png"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <style>
+        .events-hero {
+            background: linear-gradient(135deg, #27ae60 0%, #4bc0c0 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        .event-card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        .event-image {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #27ae60 0%, #4bc0c0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 60px;
+        }
+        .event-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ff6b6b;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        .event-content {
+            padding: 25px;
+        }
+        .event-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1a3a3a;
+            margin-bottom: 10px;
+        }
+        .event-date {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #27ae60;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .event-description {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        .event-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #27ae60;
+            margin-bottom: 15px;
+        }
+        .event-details {
+            display: flex;
+            gap: 15px;
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        .event-detail-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .filter-btn {
+            border: 2px solid #e0e0e0;
+            color: #666;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .filter-btn.active {
+            background: #27ae60;
+            border-color: #27ae60;
+            color: white;
+        }
+        .filter-btn:hover {
+            border-color: #27ae60;
+            color: #27ae60;
+        }
+        .events-container {
+            margin: 40px 0;
+        }
+        .no-events {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+        .upcoming-section {
+            background: linear-gradient(135deg, rgba(39, 174, 96, 0.05) 0%, rgba(75, 192, 192, 0.05) 100%);
+            padding: 40px;
+            border-radius: 15px;
+            margin: 40px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top shadow-sm" style="background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.5); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="./index.html">
+                <img src="assets/images/OikosOF.png" alt="Oikos Logo" class="navbar-logo me-2" style="height: 40px;">Oikos Orchard & Farm
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="./index.html#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./index.html#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./index.html#services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./index.html#products">Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./FAQs.html">FAQs</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="./Events.html">Events</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./index.html#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="events-hero">
+        <div class="container">
+            <h1 class="display-4 fw-bold mb-4">Upcoming Events</h1>
+            <p class="lead mb-0">Join us for unforgettable experiences at Oikos Orchard & Farm. From farm tours to glamping adventures, there's something for everyone.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container py-5">
+        <!-- Filter Section -->
+        <div class="mb-5">
+            <h5 class="mb-3 fw-bold">Filter by Category</h5>
+            <div class="d-flex gap-2 flex-wrap">
+                <button class="btn filter-btn active" onclick="filterEvents('all')">All Events</button>
+                <button class="btn filter-btn" onclick="filterEvents('farm-tour')">Farm Tours</button>
+                <button class="btn filter-btn" onclick="filterEvents('glamping')">Glamping</button>
+                <button class="btn filter-btn" onclick="filterEvents('special')">Special Events</button>
+                <button class="btn filter-btn" onclick="filterEvents('workshop')">Workshops</button>
+            </div>
+        </div>
+
+        <!-- Events Grid -->
+        <div class="events-container">
+            <div class="row g-4" id="eventsContainer">
+                <!-- Event Cards will be generated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Upcoming Highlights -->
+    <section class="upcoming-section">
+        <div class="container">
+            <h3 class="fw-bold mb-4"><i class="fas fa-star text-success me-2"></i>Featured Upcoming Events</h3>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div style="background: linear-gradient(135deg, #27ae60 0%, #4bc0c0 100%); height: 150px; display: flex; align-items: center; justify-content: center; color: white; font-size: 40px;">
+                            <i class="fas fa-calendar"></i>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="card-title fw-bold">Kite Festival</h6>
+                            <p class="card-text text-muted">Join us for our Kite Festival celebration with Kite Contest, local paintings, and farm activities.</p>
+                            <p class="text-success fw-bold">May 2026</p>
+                        </div>
+                    </div>
+                </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h3 class="fw-bold mb-3">Stay Updated on Events</h3>
+                    <p class="text-muted">Subscribe to our newsletter to get notifications about new events, special offers, and farm updates.</p>
+                </div>
+                <div class="col-lg-6">
+                    <form id="newsLetterForm" class="d-flex gap-2">
+                        <input type="email" class="form-control" placeholder="Enter your email" required>
+                        <button type="submit" class="btn btn-success px-4">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="modern-footer">
+        <!-- Top Footer Section -->
+        <div class="footer-top">
+            <div class="container">
+                <div class="row g-4">
+                    <!-- Brand Section -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-brand-section">
+                            <div class="footer-brand">
+                                <img src="assets/images/OikosOF.png" alt="Oikos Logo" class="footer-logo">
+                                <div>
+                                    <h5 class="footer-brand-name">Oikos Orchard & Farm</h5>
+                                    <p class="footer-tagline">Sustainable & Organic Excellence</p>
+                                </div>
+                            </div>
+                            <p class="footer-description">Experience comfort in nature with our Glamping and Care Glamping, where relaxation meets sustainability.
+As your trusted partner in sustainable and organic farming solutions, we proudly deliver premium-quality produce straight to your doorstep.
+Reconnect with nature while enjoying a peaceful, eco-friendly escape that nourishes both body and soul.</p>
+                            
+                            <!-- Newsletter -->
+                            <div class="newsletter-section">
+                                <h6 class="newsletter-title">Subscribe for Updates</h6>
+                                <form class="newsletter-form" id="footerNewsletterForm">
+                                    <label for="footerNewsletterEmail" class="visually-hidden">Email Address</label>
+                                    <input type="email" id="footerNewsletterEmail" name="email" placeholder="Your email..." autocomplete="email" required>
+                                    <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Products Section -->
+                    <div class="col-lg-2 col-md-6">
+                        <div class="footer-column">
+                            <h6 class="footer-column-title">
+                                <i class="fas fa-leaf"></i> Products
+                            </h6>
+                            <ul class="footer-links">
+                                <li><a href="./index.html#products">Organic Vegetables</a></li>
+                                <li><a href="./index.html#products">Organic Fruits</a></li>
+                                <li><a href="./index.html#products">Fresh Herbs</a></li>
+                                <li><a href="./index.html#products">Spices</a></li>
+                                <li><a href="./index.html#products">Seedlings</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Services Section -->
+                    <div class="col-lg-2 col-md-6">
+                        <div class="footer-column">
+                            <h6 class="footer-column-title">
+                                <i class="fas fa-concierge-bell"></i> Services
+                            </h6>
+                            <ul class="footer-links">
+                                <li><a href="./index.html#services">Farm Tours</a></li>
+                                <li><a href="./index.html#services">Glamping</a></li>
+                                <li><a href="./index.html#services">Car Glamping</a></li>
+                                <li><a href="./Events.html">Events</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Support Section -->
+                    <div class="col-lg-2 col-md-6">
+                        <div class="footer-column">
+                            <h6 class="footer-column-title">
+                                <i class="fas fa-headset"></i> Support
+                            </h6>
+                            <ul class="footer-links">
+                                <li><a href="./FAQs.html">FAQs</a></li>
+                                <li><a href="./index.html#contact">Contact Us</a></li>
+                                <li><a href="./index.html#contact">Get In Touch</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Contact Section -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-column">
+                            <h6 class="footer-column-title">
+                                <i class="fas fa-phone-alt"></i> Contact Info
+                            </h6>
+                            <div class="contact-info-block">
+                                <div class="contact-item">
+                                    <i class="fas fa-phone"></i>
+                                    <div>
+                                        <p class="contact-label">Phone</p>
+                                        <a href="tel:+639177770851">+63 917 777 0851</a>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="fas fa-envelope"></i>
+                                    <div>
+                                        <p class="contact-label">Email</p>
+                                        <a href="mailto:Oikosorchardandfarm@gmail.com">Oikosorchardandfarm@gmail.com</a>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <div>
+                                        <p class="contact-label">Address</p>
+                                        <p>Sibonga, Cebu, Philippines</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Middle Footer Section -->
+        <div class="footer-middle">
+            <div class="container">
+                <div class="row g-3 align-items-center">
+                    <!-- Payment Methods -->
+                    <div class="col-md-4">
+                        <div class="payment-section">
+                            <h6 class="payment-title">
+                                <i class="fas fa-lock"></i> Secure Payment
+                            </h6>
+                            <div class="payment-methods">
+                                <i class="fab fa-cc-visa" title="Visa"></i>
+                                <i class="fas fa-university" title="China Bank"></i>
+                                <i class="fas fa-landmark" title="PNB"></i>
+                                <i class="fas fa-mobile-alt" title="GCash"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Trust Badges -->
+                    <div class="col-md-4">
+                        <div class="trust-section">
+                            <div class="trust-badge">
+                                <i class="fas fa-certificate"></i>
+                                <p>100% Organic<br>Certified</p>
+                            </div>
+                            <div class="trust-badge">
+                                <i class="fas fa-leaf"></i>
+                                <p>Eco-Friendly<br>Packaging</p>
+                            </div>
+                            <div class="trust-badge">
+                                <i class="fas fa-truck"></i>
+                                <p>Fast & Free<br>Delivery</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Links -->
+                    <div class="col-md-4">
+                        <div class="social-section">
+                            <h6 class="social-title">Follow Us</h6>
+                            <div class="social-links-modern">
+                                <a href="https://www.facebook.com/profile.php?id=100083203516620" title="Facebook" class="social-link facebook">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="https://www.instagram.com/oiko.sorchardandfarm/" title="Instagram" class="social-link instagram">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="https://www.linkedin.com/in/oikosorchard-andfarm-680b713aa/" title="LinkedIn" class="social-link linkedin">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Footer Section -->
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <p class="footer-copyright">&copy; 2026 Oikos Orchard & Farm. All rights reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <div class="footer-bottom-links">
+                            <a href="./index.html">Privacy Policy</a>
+                            <span class="divider">•</span>
+                            <a href="./index.html">Terms of Service</a>
+                            <span class="divider">•</span>
+                            <a href="./index.html">Sitemap</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 text-center pt-3 border-top border-secondary">
+                        <p class="footer-message">Made with <i class="fas fa-heart"></i> for sustainable farming</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Event data
+        const events = [
+          
+            {
+                id: 1,
+                title: "Kite Festival",
+                category: "special",
+                date: "May 2026",
+                time: "All Day",
+                price: "0.00",
+                capacity: "Unlimited",
+                description: "Join us for our annual harvest celebration with live kite, Music, and interactive farm activities.",
+                icon: "fas fa-calendar",
+                badge: "Stay Tune"
+            },
+        ];
+
+        let currentFilter = 'all';
+
+        function renderEvents(filter = 'all') {
+            const container = document.getElementById('eventsContainer');
+            let filteredEvents = events;
+
+            if (filter !== 'all') {
+                filteredEvents = events.filter(event => event.category === filter);
+            }
+
+            if (filteredEvents.length === 0) {
+                container.innerHTML = '<div class="col-12"><div class="no-events"><p>No events found in this category.</p></div></div>';
+                return;
+            }
+
+            container.innerHTML = filteredEvents.map(event => `
+                <div class="col-md-6 col-lg-4">
+                    <div class="card event-card">
+                        <div class="event-image">
+                            <i class="${event.icon}"></i>
+                            <span class="event-badge">${event.badge}</span>
+                        </div>
+                        <div class="event-content">
+                            <h5 class="event-title">${event.title}</h5>
+                            <div class="event-date">
+                                <i class="fas fa-calendar-alt"></i>
+                                ${event.date}
+                            </div>
+                            <div class="event-details">
+                                <span class="event-detail-item">
+                                    <i class="fas fa-clock"></i>${event.time}
+                                </span>
+                                <span class="event-detail-item">
+                                    <i class="fas fa-users"></i>${event.capacity}
+                                </span>
+                            </div>
+                            <p class="event-description">${event.description}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="event-price">${event.price}</div>
+                                <button class="btn btn-success btn-sm" onclick="bookEvent(${event.id})">
+                                    <i class="fas fa-ticket-alt me-1"></i>Book
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterEvents(category) {
+            currentFilter = category;
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderEvents(category);
+        }
+
+        // Local PHP endpoint for calendar availability
+        const CALENDAR_CHECK_URL = './api/check-calendar.php';
+        let unavailableDates = [];
+        let lastFetchTime = 0;
+        const CACHE_DURATION = 1800000; // 30 minutes
+
+        // Fetch unavailable dates from local PHP or JSON fallback
+        async function fetchUnavailableDates() {
+            const now = Date.now();
+            if (unavailableDates.length > 0 && (now - lastFetchTime) < CACHE_DURATION) {
+                return unavailableDates;
+            }
+
+            try {
+                // Try PHP endpoint first
+                const phpResponse = await fetch(CALENDAR_CHECK_URL, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                const phpContentType = phpResponse.headers.get('content-type');
+                
+                // If PHP isn't executing, use JSON fallback
+                if (phpContentType && phpContentType.includes('application/x-httpd-php')) {
+                    console.warn('⚠️ PHP not executing, using JSON fallback');
+                    return await fetchCalendarFromJSON();
+                }
+                
+                if (!phpResponse.ok) {
+                    throw new Error(`HTTP Error: ${phpResponse.status}`);
+                }
+                
+                if (!phpContentType || !phpContentType.includes('application/json')) {
+                    console.warn(`⚠️ Unexpected content type: ${phpContentType}, trying JSON fallback`);
+                    return await fetchCalendarFromJSON();
+                }
+                
+                const data = await phpResponse.json();
+                
+                if (data.success && data.unavailableDates && Array.isArray(data.unavailableDates)) {
+                    unavailableDates = data.unavailableDates;
+                    lastFetchTime = now;
+                    console.log('✅ Calendar dates updated from PHP:', unavailableDates);
+                    return unavailableDates;
+                }
+            } catch (error) {
+                console.warn('⚠️ PHP endpoint failed, trying JSON fallback:', error.message);
+            }
+            
+            return await fetchCalendarFromJSON();
+        }
+        
+        async function fetchCalendarFromJSON() {
+            try {
+                const response = await fetch('./api/calendar-data.json', {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP Error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.success && data.unavailableDates && Array.isArray(data.unavailableDates)) {
+                    unavailableDates = data.unavailableDates;
+                    lastFetchTime = Date.now();
+                    console.log('✅ Calendar dates loaded from JSON:', unavailableDates);
+                    return unavailableDates;
+                }
+            } catch (error) {
+                console.error('❌ Error loading calendar from JSON:', error.message);
+            }
+            
+            return unavailableDates;
+        }
+
+        // Check if event dates are available
+        function areEventDatesAvailable(eventDates) {
+            return eventDates.every(dateStr => !unavailableDates.includes(dateStr));
+        }
+
+        async function bookEvent(eventId) {
+            const event = events.find(e => e.id === eventId);
+            if (!event) return;
+
+            // Fetch latest calendar data
+            await fetchUnavailableDates();
+
+            // Check availability
+            if (!areEventDatesAvailable(event.dates)) {
+                alert(`❌ Not Available\n\nSorry, "${event.title}" is not available on the requested dates.\n\nPlease:\n1. Check other event dates\n2. Or contact us at:\n   Phone: +63 917 777 0851\n   Email: oikosorchardandfarm2@gmail.com`);
+                return;
+            }
+
+            alert(`✅ Available!\n\n"${event.title}" is available.\n\nPlease contact us to complete your booking:\n\nPhone: +63 917 777 0851\nEmail: oikosorchardandfarm2@gmail.com\n\nDates: ${event.dates.join(', ')}`);
+        }
+
+        // Initial render
+        document.addEventListener('DOMContentLoaded', function() {
+            renderEvents();
+            
+            // Fetch calendar availability on page load
+            fetchUnavailableDates();
+            
+            // Refresh calendar data every 30 minutes
+            setInterval(fetchUnavailableDates, CACHE_DURATION);
+            
+            // Newsletter form
+            document.getElementById('newsLetterForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Thank you for subscribing! You will receive event updates at your email.');
+                this.reset();
+            });
+        });
+    </script>
+</body>
+</html>
