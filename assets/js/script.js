@@ -5,75 +5,8 @@
 const REVIEWS_STORAGE_KEY = 'oikos_reviews';
 
 // ================================
-// ECOMMERCE BOOKING FORM FUNCTIONS
+// VALIDATION FUNCTIONS
 // ================================
-
-function updatePrice() {
-    var packageSelect = document.getElementById('packageName');
-    var priceDisplay = document.getElementById('displayPrice');
-    var checkInInput = document.getElementById('bookingCheckIn');
-    var checkOutInput = document.getElementById('bookingCheckOut');
-    
-    if (!packageSelect || !priceDisplay) {
-        return;
-    }
-    
-    var selectedValue = packageSelect.value;
-    
-    if (!selectedValue || selectedValue === '') {
-        priceDisplay.textContent = '---';
-        priceDisplay.style.color = '#999';
-        return;
-    }
-    
-    var parts = selectedValue.split('|');
-    var packageName = parts[0];
-    var basePrice = parseInt(parts[1]);
-    
-    // Calculate number of nights
-    var nights = 1; // default to 1 night
-    
-    if (checkInInput && checkOutInput && checkInInput.value && checkOutInput.value) {
-        var checkInDate = new Date(checkInInput.value);
-        var checkOutDate = new Date(checkOutInput.value);
-        
-        if (checkOutDate > checkInDate) {
-            var timeDiff = checkOutDate - checkInDate;
-            nights = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-        }
-    }
-    
-    // Calculate total price
-    var totalPrice = basePrice * nights;
-    
-    if (basePrice) {
-        var formattedPrice = '₱' + totalPrice.toLocaleString('en-PH');
-        if (nights > 1) {
-            formattedPrice += ' (' + nights + ' nights)';
-        }
-        
-        priceDisplay.textContent = formattedPrice;
-        priceDisplay.style.color = '#27ae60';
-        
-        var priceContainer = document.querySelector('.price-display');
-        if (priceContainer) {
-            priceContainer.style.transform = 'scale(1.02)';
-            setTimeout(function() {
-                priceContainer.style.transform = 'scale(1)';
-            }, 300);
-        }
-    }
-}
-
-// Sync email to Formspree _replyto field
-function syncEmailToReplyTo() {
-    var emailInput = document.getElementById('bookingEmail');
-    var replytoField = document.getElementById('replyto_field');
-    
-    if (emailInput && replytoField) {
-        replytoField.value = emailInput.value;
-    }
-}
 
 // Validate phone number
 function validatePhoneNumber(phone) {
@@ -92,45 +25,7 @@ function isValidEmail(email) {
 // REVIEWS PERSISTENCE (LocalStorage)
 // ================================
 
-function saveReviewToStorage(reviewData) {
-    let reviews = JSON.parse(localStorage.getItem(REVIEWS_STORAGE_KEY)) || [];
-    reviews.unshift({
-        ...reviewData,
-        id: Date.now(), // Unique ID for the review
-        timestamp: new Date().toISOString()
-    });
-    localStorage.setItem(REVIEWS_STORAGE_KEY, JSON.stringify(reviews));
-}
 
-function loadReviewsFromStorage() {
-    const reviews = JSON.parse(localStorage.getItem(REVIEWS_STORAGE_KEY)) || [];
-    const container = document.getElementById('testimonials-container');
-    
-    if (!container || reviews.length === 0) return;
-    
-    reviews.forEach(review => {
-        // Check if review already exists in DOM
-        const existingReview = container.querySelector(`[data-review-id="${review.id}"]`);
-        if (!existingReview) {
-            const newTestimonial = document.createElement('div');
-            newTestimonial.className = 'col-md-4 testimonial-item';
-            newTestimonial.setAttribute('data-review-id', review.id);
-            newTestimonial.innerHTML = `
-                <div class="testimonial-card">
-                    <div class="stars mb-2">
-                        ${Array(parseInt(review.rating)).fill('<i class="fas fa-star text-warning"></i>').join('')}
-                        ${Array(5 - parseInt(review.rating)).fill('<i class="fas fa-star text-secondary"></i>').join('')}
-                    </div>
-                    <p class="rating-number">${review.rating}.0</p>
-                    <p class="mb-3">"${review.review}"</p>
-                    <h6 class="text-success">- ${review.name}</h6>
-                    <small class="text-muted">${review.location}</small>
-                </div>
-            `;
-            container.insertBefore(newTestimonial, container.firstChild);
-        }
-    });
-}
 
 // ================================
 // PAGINATION FUNCTIONALITY
@@ -265,15 +160,6 @@ window.submitReview = function() {
 // ================================
 
 document.addEventListener('DOMContentLoaded', function() {
-    // ================================
-    // SYNCING EMAIL TO REPLYTO FIELD
-    // ================================
-    const bookingEmail = document.getElementById('bookingEmail');
-    if (bookingEmail) {
-        bookingEmail.addEventListener('input', syncEmailToReplyTo);
-        bookingEmail.addEventListener('change', syncEmailToReplyTo);
-    }
-
     const starIcons = document.querySelectorAll('.star-icon');
     const ratingValue = document.getElementById('ratingValue');
     const ratingText = document.getElementById('ratingText');
@@ -748,7 +634,6 @@ function updateActiveLink() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', updateActiveLink);
 
 // ================================
 // NEWSLETTER FORM
@@ -874,13 +759,10 @@ function submitGetStarted(e) {
         submitButton.textContent = 'Submitting...';
     }
 
-    // Send to Formspree
-    const formspreeEndpoint = 'https://formspree.io/f/xjgebgql';
-
-    console.log('Sending Get Started to Formspree:', formspreeEndpoint);
+    console.log('Sending Get Started to API:', apiEndpoint);
     console.log('Payload:', data);
 
-    fetch(formspreeEndpoint, {
+    fetch(apiEndpoint, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -965,10 +847,10 @@ function submitContactSms() {
     submitButton.disabled = true;
     submitButton.textContent = 'Sending...';
 
-    // Send to server (use Netlify function or local PHP)
+    // Send to server (use local PHP API)
     const endpoint = window.location.hostname === 'localhost' 
-      ? '/OikosOrchardandFarm/api/form_to_sms.php'
-      : '/.netlify/functions/send-contact-sms';
+      ? '/OikosOrchardandFarm/api/send-getstarted.php'
+      : '/.netlify/functions/send-getstarted';
 
     console.log('Sending SMS to:', endpoint);
     console.log('Payload:', payload);
@@ -1691,6 +1573,75 @@ function showSuccessModal(title, message) {
                     </svg>
 
 /**
+ * Update price display based on selected package and dates
+ * Calculates: Total = (Number of Nights) × (Package Price)
+ */
+function updatePrice() {
+    const packageSelect = document.getElementById('packageName');
+    const checkInInput = document.getElementById('bookingCheckIn');
+    const checkOutInput = document.getElementById('bookingCheckOut');
+    const displayPriceEl = document.getElementById('displayPrice');
+    
+    if (!packageSelect || !displayPriceEl) return;
+    
+    const selectedValue = packageSelect.value;
+    const checkInDate = checkInInput ? checkInInput.value : '';
+    const checkOutDate = checkOutInput ? checkOutInput.value : '';
+    
+    // If no package is selected, show placeholder
+    if (!selectedValue) {
+        displayPriceEl.textContent = '---';
+        displayPriceEl.style.color = '#999';
+        displayPriceEl.style.fontWeight = 'normal';
+        return;
+    }
+    
+    // Parse price from package value (format: "Package Name|Price")
+    const parts = selectedValue.split('|');
+    if (parts.length !== 2) {
+        displayPriceEl.textContent = '---';
+        displayPriceEl.style.color = '#999';
+        displayPriceEl.style.fontWeight = 'normal';
+        return;
+    }
+    
+    const pricePerNight = parseInt(parts[1]);
+    
+    // If both dates are selected, calculate total
+    if (checkInDate && checkOutDate) {
+        const checkIn = new Date(checkInDate);
+        const checkOut = new Date(checkOutDate);
+        
+        // Calculate number of nights
+        const diffTime = checkOut - checkIn;
+        const numberOfNights = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        
+        if (numberOfNights > 0) {
+            // Calculate total: nights × price per night
+            const totalAmount = numberOfNights * pricePerNight;
+            const formattedPrice = '₱' + totalAmount.toLocaleString('en-US');
+            const nightText = numberOfNights > 1 ? 'nights' : 'night';
+            
+            // Display: "₱XXX,XXX (X nights)"
+            displayPriceEl.innerHTML = formattedPrice + ' <small style="font-size: 0.8em; opacity: 0.8;">(' + numberOfNights + ' ' + nightText + ')</small>';
+            displayPriceEl.style.color = '#27ae60';
+            displayPriceEl.style.fontWeight = 'bold';
+        } else {
+            // Check-out date is before or same as check-in date
+            displayPriceEl.textContent = 'Invalid dates';
+            displayPriceEl.style.color = '#dc3545';
+            displayPriceEl.style.fontWeight = 'bold';
+        }
+    } else {
+        // Only package is selected, show price per night
+        const formattedPrice = '₱' + pricePerNight.toLocaleString('en-US');
+        displayPriceEl.innerHTML = formattedPrice + ' <small style="font-size: 0.8em; opacity: 0.8;">per night</small>';
+        displayPriceEl.style.color = '#27ae60';
+        displayPriceEl.style.fontWeight = 'bold';
+    }
+}
+
+/**
  * Initialize booking form with smooth animations
  */
 document.addEventListener('DOMContentLoaded', function() {
@@ -1706,6 +1657,9 @@ document.addEventListener('DOMContentLoaded', function() {
         packageSelect.addEventListener('change', function() {
             updatePrice();
         });
+        packageSelect.addEventListener('input', function() {
+            updatePrice();
+        });
         updatePrice();
     }
     
@@ -1717,25 +1671,26 @@ document.addEventListener('DOMContentLoaded', function() {
         checkInInput.addEventListener('change', function() {
             updatePrice();
         });
+        checkInInput.addEventListener('input', function() {
+            updatePrice();
+        });
     }
     
     if (checkOutInput) {
         checkOutInput.addEventListener('change', function() {
             updatePrice();
         });
+        checkOutInput.addEventListener('input', function() {
+            updatePrice();
+        });
     }
-
-    // Sync email to Formspree _replyto field
-    var emailInput = document.getElementById('bookingEmail');
-    if (emailInput) {
-        emailInput.addEventListener('input', function() {
-            syncEmailToReplyTo();
+    
+    // When booking modal opens, ensure price is updated
+    const contactModal = document.getElementById('contactModal');
+    if (contactModal) {
+        contactModal.addEventListener('show.bs.modal', function() {
+            setTimeout(updatePrice, 100);
         });
-        emailInput.addEventListener('change', function() {
-            syncEmailToReplyTo();
-        });
-        // Initial sync on page load
-        syncEmailToReplyTo();
     }
     
     // Phone number validation
@@ -1788,20 +1743,13 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
+});
     
     // Remove this section - using DOMContentLoaded version instead
 
     // ================================
     // BOOKING FORM SUBMISSION WITH SUCCESS ANIMATION
     // ================================
-
-// Package prices mapping
-const bookingOikosPrices = {
-    'Regular': '5000',
-    'Glamping': '7500',
-    'Premium': '10000',
-    'VIP': '15000'
-};
 
 // Update price when package is selected
 document.addEventListener('DOMContentLoaded', function() {
@@ -1810,8 +1758,30 @@ document.addEventListener('DOMContentLoaded', function() {
         packageNameEl.addEventListener('change', function() {
             const selectedPackage = this.value;
             const packagePriceEl = document.getElementById('packagePrice');
+            const displayPriceEl = document.getElementById('displayPrice');
+            
+            // Parse price from package value (format: "Package Name|Price")
+            let price = '';
+            if (selectedPackage && selectedPackage.includes('|')) {
+                const parts = selectedPackage.split('|');
+                price = '₱' + parts[1].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            }
+            
             if (packagePriceEl) {
-                packagePriceEl.value = bookingOikosPrices[selectedPackage] || '';
+                packagePriceEl.value = selectedPackage;
+            }
+            
+            // Display the price in the price display section
+            if (displayPriceEl) {
+                if (price) {
+                    displayPriceEl.textContent = price;
+                    displayPriceEl.style.color = '#27ae60';
+                    displayPriceEl.style.fontWeight = 'bold';
+                } else {
+                    displayPriceEl.textContent = '---';
+                    displayPriceEl.style.color = '#999';
+                    displayPriceEl.style.fontWeight = 'normal';
+                }
             }
         });
     }
@@ -1866,17 +1836,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 return false;
             }
 
-            // Validate dates
-            if (!isDateAvailable(checkinDate, checkoutDate)) {
-                if (messageDiv) {
-                    messageDiv.style.display = 'block';
-                    messageDiv.style.backgroundColor = '#f8d7da';
-                    messageDiv.style.color = '#721c24';
-                    messageDiv.textContent = '❌ One or more of your selected dates are not available. Please choose different dates.';
-                }
-                showNotAvailableModal(checkinDate, checkoutDate);
-                return false;
-            }
+            // Note: Date validation is handled by the browser date input UI
+            // Server-side validation will occur when Formspree receives the submission
 
             // Extract price from package value (format: "Package Name|Price")
             const packageParts = packageValue.split('|');
@@ -1914,107 +1875,6 @@ document.addEventListener('DOMContentLoaded', function() {
             // Show booking confirmation modal
             const confirmationModal = new bootstrap.Modal(document.getElementById('bookingConfirmationModal'));
             confirmationModal.show();
-        });
-    }
-
-    // Function to confirm and submit booking after modal confirmation
-    function confirmAndSubmitBooking() {
-        if (!window.pendingBookingForm || !window.pendingFormData) {
-            console.error('No pending booking data');
-            return;
-        }
-
-        // Get the form and button
-        const bookingForm = window.pendingBookingForm;
-        const submitBtn = bookingForm.querySelector('button[type="submit"]');
-        const messageDiv = document.getElementById('formMessage');
-        
-        // Hide confirmation modal
-        const confirmationModal = bootstrap.Modal.getInstance(document.getElementById('bookingConfirmationModal'));
-        if (confirmationModal) {
-            confirmationModal.hide();
-        }
-
-        // Show loading state
-        if (submitBtn) {
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
-        }
-
-        // Sync email to _replyto field
-        const formData = window.pendingFormData;
-        const email = formData.get('email');
-        const replytoField = document.getElementById('replyto_field');
-        if (replytoField) {
-            replytoField.value = email;
-        }
-
-        console.log('📤 Sending booking to Formspree...');
-
-        // SEND TO FORMSPREE
-        const formspreeURL = 'https://formspree.io/f/mykdpbrk';
-
-        fetch(formspreeURL, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'Accept': 'application/json'
-            }
-        })
-        .then(response => {
-            console.log('✅ Response received:', response.status);
-            if (response.status === 200) {
-                return response.json();
-            } else {
-                throw new Error('Form submission failed');
-            }
-        })
-        .then(data => {
-            console.log('✅ Success! Data sent to Formspree:', data);
-            
-            if (messageDiv) {
-                messageDiv.style.display = 'block';
-                messageDiv.style.backgroundColor = '#d4edda';
-                messageDiv.style.color = '#155724';
-                messageDiv.innerHTML = '✅ Booking submitted successfully!<br>We will contact you shortly to confirm your reservation.';
-            }
-            
-            // Reset form
-            bookingForm.reset();
-            
-            // Close modal after 3 seconds
-            setTimeout(() => {
-                if (messageDiv) {
-                    messageDiv.style.display = 'none';
-                }
-                if (submitBtn) {
-                    submitBtn.textContent = '✅ Confirm & Check Availability';
-                    submitBtn.disabled = false;
-                }
-            }, 3000);
-        })
-        .catch(error => {
-            console.error('❌ Error:', error);
-            
-            if (messageDiv) {
-                messageDiv.style.display = 'block';
-                messageDiv.style.backgroundColor = '#f8d7da';
-                messageDiv.style.color = '#721c24';
-                messageDiv.innerHTML = '❌ Error submitting booking. Please try again.';
-            }
-            
-            // Reset button state
-            if (submitBtn) {
-                submitBtn.textContent = '🔒 Confirm & Check Availability';
-                submitBtn.disabled = false;
-            }
-
-            // Hide error message after 4 seconds
-            setTimeout(() => {
-                if (messageDiv) {
-                    messageDiv.style.display = 'none';
-                }
-            }, 4000);
         });
     }
 });
@@ -2055,7 +1915,10 @@ window.confirmAndSubmitBooking = function() {
 
     // SEND TO FORMSPREE
     const formspreeURL = 'https://formspree.io/f/mykdpbrk';
-
+    
+    // Get all form data from the pending form
+    const formData = window.pendingFormData;
+    
     fetch(formspreeURL, {
         method: 'POST',
         body: formData,
@@ -2065,10 +1928,10 @@ window.confirmAndSubmitBooking = function() {
     })
     .then(response => {
         console.log('✅ Response received:', response.status);
-        if (response.status === 200) {
+        if (response.ok) {
             return response.json();
         } else {
-            throw new Error('Form submission failed');
+            throw new Error('Form submission failed with status ' + response.status);
         }
     })
     .then(data => {
@@ -2084,14 +1947,21 @@ window.confirmAndSubmitBooking = function() {
         // Reset form
         bookingForm.reset();
         
-        // Close modal after 3 seconds
+        // Reset button state
+        if (submitBtn) {
+            submitBtn.textContent = '✅ Confirm & Check Availability';
+            submitBtn.disabled = false;
+        }
+        
+        // Close modal and reset after 3 seconds
         setTimeout(() => {
             if (messageDiv) {
                 messageDiv.style.display = 'none';
             }
-            if (submitBtn) {
-                submitBtn.textContent = '✅ Confirm & Check Availability';
-                submitBtn.disabled = false;
+            // Close the confirmation modal
+            const confirmationModal = bootstrap.Modal.getInstance(document.getElementById('bookingConfirmationModal'));
+            if (confirmationModal) {
+                confirmationModal.hide();
             }
         }, 3000);
     })
@@ -2102,7 +1972,7 @@ window.confirmAndSubmitBooking = function() {
             messageDiv.style.display = 'block';
             messageDiv.style.backgroundColor = '#f8d7da';
             messageDiv.style.color = '#721c24';
-            messageDiv.innerHTML = '❌ Error submitting booking. Please try again.';
+            messageDiv.innerHTML = '❌ Error submitting booking. Please try again.<br>Error: ' + error.message;
         }
         
         // Reset button state
@@ -2111,381 +1981,19 @@ window.confirmAndSubmitBooking = function() {
             submitBtn.disabled = false;
         }
 
-        // Hide error message after 4 seconds
+        // Hide error message after 5 seconds
         setTimeout(() => {
             if (messageDiv) {
                 messageDiv.style.display = 'none';
             }
-        }, 4000);
+        }, 5000);
     });
 };
 
-    // ================================
-    // GOOGLE CALENDAR AVAILABILITY CHECK
-    // ================================
-    
-    // Local PHP endpoint for fetching unavailable dates
-    const CALENDAR_CHECK_URL = './api/check-calendar.php';
-    let unavailableDates = [];
-    let lastFetchTime = 0;
-    const CACHE_DURATION = 1800000; // 30 minutes in milliseconds
-    
-    // Fetch unavailable dates from local PHP
-    async function fetchUnavailableDates() {
-        const now = Date.now();
-        
-        // Return cached data if still fresh
-        if (unavailableDates.length > 0 && (now - lastFetchTime) < CACHE_DURATION) {
-            return unavailableDates;
-        }
-        
-        try {
-            // Try PHP endpoint first
-            const phpResponse = await fetch(CALENDAR_CHECK_URL, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-            
-            const phpContentType = phpResponse.headers.get('content-type');
-            
-            // If PHP isn't executing (returns application/x-httpd-php), use JSON fallback
-            if (phpContentType && phpContentType.includes('application/x-httpd-php')) {
-                console.warn('⚠️ PHP not executing, using JSON fallback');
-                return await fetchFromJSONFile();
-            }
-            
-            if (!phpResponse.ok) {
-                throw new Error(`HTTP Error: ${phpResponse.status}`);
-            }
-            
-            if (!phpContentType || !phpContentType.includes('application/json')) {
-                console.warn(`⚠️ Unexpected content type: ${phpContentType}, trying JSON fallback`);
-                return await fetchFromJSONFile();
-            }
-            
-            const data = await phpResponse.json();
-            
-            if (data.success && data.unavailableDates && Array.isArray(data.unavailableDates)) {
-                unavailableDates = data.unavailableDates;
-                lastFetchTime = now;
-                console.log('✅ Unavailable dates fetched from PHP:', unavailableDates);
-                updateDateInputs();
-                return unavailableDates;
-            }
-        } catch (error) {
-            console.warn('⚠️ PHP endpoint failed, trying JSON fallback:', error.message);
-        }
-        
-        // Fallback to JSON file
-        return await fetchFromJSONFile();
-    }
-    
-    async function fetchFromJSONFile() {
-        try {
-            const response = await fetch('./api/calendar-data.json', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-            
-            if (!response.ok) {
-                throw new Error(`HTTP Error: ${response.status}`);
-            }
-            
-            const data = await response.json();
-            
-            if (data.success && data.unavailableDates && Array.isArray(data.unavailableDates)) {
-                unavailableDates = data.unavailableDates;
-                lastFetchTime = Date.now();
-                console.log('✅ Unavailable dates loaded from JSON:', unavailableDates);
-                updateDateInputs();
-                return unavailableDates;
-            }
-        } catch (error) {
-            console.error('❌ Error fetching calendar from JSON:', error.message);
-        }
-        
-        return [];
-    }
-    
-    // Update date input attributes to disable unavailable dates
-    function updateDateInputs() {
-        const checkInInput = document.getElementById('bookingCheckIn');
-        const checkOutInput = document.getElementById('bookingCheckOut');
-        
-        if (checkInInput) {
-            checkInInput.addEventListener('change', validateDateSelection);
-            checkInInput.addEventListener('focus', validateDateSelection);
-        }
-        
-        if (checkOutInput) {
-            checkOutInput.addEventListener('change', validateDateSelection);
-            checkOutInput.addEventListener('focus', validateDateSelection);
-        }
-    }
-    
-    // Check if a date range is available
-    function isDateAvailable(checkInStr, checkOutStr) {
-        if (!checkInStr || !checkOutStr) return false;
-        
-        const checkInDate = new Date(checkInStr);
-        const checkOutDate = new Date(checkOutStr);
-        
-        // Check if checkout is after checkin
-        if (checkOutDate <= checkInDate) {
-            return false;
-        }
-        
-        // Check each day in the range (including checkout date)
-        for (let d = new Date(checkInDate); d <= checkOutDate; d.setDate(d.getDate() + 1)) {
-            const dateString = d.toISOString().split('T')[0];
-            if (unavailableDates.includes(dateString)) {
-                return false;
-            }
-        }
-        
-        return true;
-    }
-    
-    // Validate date selection and show warnings
-    function validateDateSelection(e) {
-        const checkInInput = document.getElementById('bookingCheckIn');
-        const checkOutInput = document.getElementById('bookingCheckOut');
-        const formMessage = document.getElementById('formMessage');
-        
-        // Check if check-in date alone is unavailable
-        if (checkInInput.value && unavailableDates.includes(checkInInput.value)) {
-            checkInInput.style.borderColor = '#dc3545';
-            
-            // Show toast notification
-            const checkInDate = new Date(checkInInput.value);
-            const formattedDate = checkInDate.toLocaleDateString('en-US', { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            });
-            showUnavailableToast(`❌ ${formattedDate} is unavailable`);
-            
-            // Show "Not Available" modal immediately
-            showNotAvailableModal(checkInInput.value, checkOutInput.value || checkInInput.value);
-            
-            if (formMessage) {
-                formMessage.style.display = 'block';
-                formMessage.style.backgroundColor = '#f8d7da';
-                formMessage.style.color = '#721c24';
-                formMessage.style.border = '1px solid #f5c6cb';
-                formMessage.textContent = '❌ This check-in date is not available.';
-            }
-            return;
-        }
-        
-        // Check if check-out date alone is unavailable
-        if (checkOutInput.value && unavailableDates.includes(checkOutInput.value)) {
-            checkOutInput.style.borderColor = '#dc3545';
-            
-            // Show toast notification
-            const checkOutDate = new Date(checkOutInput.value);
-            const formattedDate = checkOutDate.toLocaleDateString('en-US', { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            });
-            showUnavailableToast(`❌ ${formattedDate} is unavailable`);
-            
-            // Show "Not Available" modal immediately
-            showNotAvailableModal(checkInInput.value || checkOutInput.value, checkOutInput.value);
-            
-            if (formMessage) {
-                formMessage.style.display = 'block';
-                formMessage.style.backgroundColor = '#f8d7da';
-                formMessage.style.color = '#721c24';
-                formMessage.style.border = '1px solid #f5c6cb';
-                formMessage.textContent = '❌ This check-out date is not available.';
-            }
-            return;
-        }
-        
-        if (!checkInInput.value || !checkOutInput.value) {
-            return; // Don't validate if either date is empty
-        }
-        
-        const checkInDate = new Date(checkInInput.value);
-        const checkOutDate = new Date(checkOutInput.value);
-        
-        // Check if checkout is before or equal to checkin
-        if (checkOutDate <= checkInDate) {
-            if (formMessage) {
-                formMessage.style.display = 'block';
-                formMessage.style.backgroundColor = '#fff3cd';
-                formMessage.style.color = '#856404';
-                formMessage.style.border = '1px solid #ffeeba';
-                formMessage.textContent = '⚠️ Check-out date must be after check-in date.';
-            }
-            checkInInput.style.borderColor = '#ffc107';
-            checkOutInput.style.borderColor = '#ffc107';
-            return;
-        }
-        
-        // Check for unavailable dates in the range
-        if (!isDateAvailable(checkInInput.value, checkOutInput.value)) {
-            if (formMessage) {
-                formMessage.style.display = 'block';
-                formMessage.style.backgroundColor = '#f8d7da';
-                formMessage.style.color = '#721c24';
-                formMessage.style.border = '1px solid #f5c6cb';
-                formMessage.textContent = '❌ Not Available - One or more selected dates are booked. Please choose different dates.';
-            }
-            checkInInput.style.borderColor = '#dc3545';
-            checkOutInput.style.borderColor = '#dc3545';
-            
-            // Show "Not Available" modal
-            showNotAvailableModal(checkInInput.value, checkOutInput.value);
-        } else {
-            if (formMessage) {
-                formMessage.style.display = 'none';
-            }
-            checkInInput.style.borderColor = '';
-            checkOutInput.style.borderColor = '';
-        }
-    }
-    
-    // Show Not Available Modal
-    function showNotAvailableModal(checkInDate, checkOutDate) {
-        const modal = document.getElementById('notAvailableModal');
-        const infoText = document.getElementById('unavailableDateInfo');
-        
-        if (!modal) return;
-        
-        // Find which dates are unavailable
-        const unavailableDatesInRange = [];
-        const start = new Date(checkInDate);
-        const end = new Date(checkOutDate);
-        
-        for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
-            const dateString = d.toISOString().split('T')[0];
-            if (unavailableDates.includes(dateString)) {
-                unavailableDatesInRange.push(dateString);
-            }
-        }
-        
-        // Update modal info
-        if (infoText) {
-            if (unavailableDatesInRange.length > 0) {
-                const formattedDates = unavailableDatesInRange.map(d => {
-                    return new Date(d + 'T00:00:00').toLocaleDateString('en-US', { 
-                        month: 'short', 
-                        day: 'numeric' 
-                    });
-                }).join(', ');
-                infoText.textContent = `Booked: ${formattedDates}`;
-            }
-        }
-        
-        // Show modal using Bootstrap
-        const bsModal = new bootstrap.Modal(modal);
-        bsModal.show();
-    }
-    
-    // Show Toast Notification for Unavailable Dates
-    function showUnavailableToast(message) {
-        // Remove existing toast if present
-        const existingToast = document.getElementById('unavailableToast');
-        if (existingToast) {
-            existingToast.remove();
-        }
-        
-        // Create toast container
-        const toastContainer = document.createElement('div');
-        toastContainer.id = 'unavailableToast';
-        toastContainer.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: #f8d7da;
-            color: #721c24;
-            padding: 15px 20px;
-            border-radius: 4px;
-            border: 1px solid #f5c6cb;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-            z-index: 9999;
-            font-size: 16px;
-            font-weight: 500;
-            max-width: 400px;
-            animation: slideIn 0.3s ease-out;
-        `;
-        
-        toastContainer.textContent = message;
-        document.body.appendChild(toastContainer);
-        
-        // Auto-remove after 5 seconds
-        setTimeout(() => {
-            toastContainer.style.animation = 'slideOut 0.3s ease-out';
-            setTimeout(() => {
-                toastContainer.remove();
-            }, 300);
-        }, 5000);
-    }
-    
-    // Contact Us function for modal button
-    function contactUsAboutDates() {
-        const modal = document.getElementById('notAvailableModal');
-        if (modal) {
-            const bsModal = bootstrap.Modal.getInstance(modal);
-            if (bsModal) bsModal.hide();
-        }
-        
-        // Scroll to contact or show contact info
-        const contactSection = document.getElementById('contact');
-        if (contactSection) {
-            contactSection.scrollIntoView({ behavior: 'smooth' });
-        }
-    }
-    
-    // Initialize calendar availability check on page load
-    fetchUnavailableDates();
-    
-    // Refresh available dates every 30 minutes
-    setInterval(fetchUnavailableDates, CACHE_DURATION);
-    
-    // Update calendar status banner
-    async function updateCalendarStatusBanner() {
-        const banner = document.getElementById('calendarStatusBanner');
-        const statusText = document.getElementById('calendarStatusText');
-        
-        if (!banner || !statusText) return;
-        
-        try {
-            await fetchUnavailableDates();
-            
-            if (unavailableDates.length > 0) {
-                banner.style.display = 'block';
-                banner.style.borderLeftColor = '#ff9800';
-                banner.style.backgroundColor = '#fff3e0';
-                banner.style.color = '#e65100';
-                statusText.innerHTML = `<i class="fas fa-info-circle me-2"></i>${unavailableDates.length} date(s) are currently booked.`;
-            } else {
-                banner.style.display = 'block';
-                banner.style.borderLeftColor = '#27ae60';
-                banner.style.backgroundColor = '#e8f5e9';
-                banner.style.color = '#27ae60';
-                statusText.innerHTML = `<i class="fas fa-calendar-check me-2"></i>All dates are available! ✨`;
-            }
-        } catch (error) {
-            console.error('Error updating banner:', error);
-        }
-    }
-    
-    // Update banner when modal opens
-    const bookingModal = document.getElementById('contactModal');
-    if (bookingModal) {
-        bookingModal.addEventListener('show.bs.modal', updateCalendarStatusBanner);
-    }
-});
+// ================================
+// CLEANUP AND FINALIZATION
+// ================================
+console.log('✅ Booking form initialized successfully');
 
 
 

@@ -1290,11 +1290,10 @@ Reconnect with nature while enjoying a peaceful, eco-friendly escape that nouris
                 <button type="button" class="btn-close ecommerce-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body ecommerce-body">
-                <form id="bookingForm" action="https://formspree.io/f/maqpprje" method="POST" class="enhanced-form">
-                    <!-- Formspree Configuration -->
+                <form id="bookingForm" class="enhanced-form" action="https://formspree.io/f/mykdpbrk" method="POST">
+                    <!-- Booking Form Configuration -->
                     <input type="hidden" name="_subject" value="New Booking Request - Oikos Orchard & Farm">
                     <input type="hidden" name="_captcha" value="false">
-                    <input type="hidden" name="_cc" value="oikosorchardandfarm2@gmail.com">
                     
                     <!-- Quick Booking Options -->
                     <div class="booking-platforms mb-4">
@@ -1384,7 +1383,7 @@ Reconnect with nature while enjoying a peaceful, eco-friendly escape that nouris
                         <h6 class="section-header"><i class="fas fa-box me-2"></i>Choose Your Package</h6>
                         <div class="form-group">
                             <label for="packageName" class="form-label visually-hidden">Choose Your Package</label>
-                            <select id="packageName" class="form-control form-input enhanced-select" name="package" required onchange="if(typeof updatePrice === 'function') updatePrice(); else console.warn('updatePrice not defined');">
+                            <select id="packageName" class="form-control form-input enhanced-select" name="packageName" required>
                                 <option value="">Select a Package</option>
                                 <option value="Glamping for 2 (2pax) - Perfect for Couples|3500">💑 Glamping for 2 - ₱3,500</option>
                                 <option value="Glamping for 4 (4pax) - Perfect for Small Families|4200">👨‍👩‍👧‍👦 Glamping for 4 - ₱4,200</option>
@@ -1394,7 +1393,6 @@ Reconnect with nature while enjoying a peaceful, eco-friendly escape that nouris
                             <small class="form-feedback"></small>
                         </div>
                     </div>
-
                     <!-- Calendar Availability Status Banner -->
                     <div id="calendarStatusBanner" style="display: none; margin-bottom: 20px; padding: 12px 16px; border-radius: 8px; border-left: 4px solid #27ae60; background-color: #e8f5e9; color: #27ae60; font-size: 0.9rem;">
                         <i class="fas fa-calendar-check me-2"></i>
@@ -1450,9 +1448,7 @@ Reconnect with nature while enjoying a peaceful, eco-friendly escape that nouris
                         </div>
                     </div>
 
-                    <!-- Formspree Reply-To Field -->
-                    <input type="hidden" name="_replyto" id="replyto_field">
-
+                    <!-- Hidden Field for Email -->
                     <!-- Price Display -->
                     <div class="price-display">
                         <div class="price-row">
@@ -1483,8 +1479,8 @@ Reconnect with nature while enjoying a peaceful, eco-friendly escape that nouris
 </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/translations.js"></script>
-    <script src="assets/js/script.js"></script>
+    <script src="assets/js/translations.js?v=3"></script>
+    <script src="assets/js/script-clean.js?v=1"></script>
 
     <!-- Cookie Privacy Consent Banner -->
     <div id="cookieConsent" style="position: fixed; bottom: 0; left: 0; right: 0; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; padding: 25px; z-index: 9999; box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);">
