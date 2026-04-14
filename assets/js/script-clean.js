@@ -200,6 +200,12 @@ document.addEventListener('DOMContentLoaded', function() {
             window.pendingBookingForm = bookingForm;
             window.pendingFormData = formData;
 
+            // Close the booking form modal
+            const contactModal = bootstrap.Modal.getInstance(document.getElementById('contactModal'));
+            if (contactModal) {
+                contactModal.hide();
+            }
+
             // Show confirmation modal
             const confirmationModal = new bootstrap.Modal(document.getElementById('bookingConfirmationModal'));
             confirmationModal.show();
