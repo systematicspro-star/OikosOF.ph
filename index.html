@@ -747,9 +747,11 @@ Reconnect with nature while enjoying a peaceful, eco-friendly escape that nouris
                             <!-- Newsletter -->
                             <div class="newsletter-section">
                                 <h6 class="newsletter-title">Subscribe for Updates</h6>
-                                <form class="newsletter-form" id="newsletterForm">
+                                <form class="newsletter-form" action="https://formspree.io/f/mkraipzq" method="POST" id="newsletterForm">
                                     <label for="newsletterEmail" class="visually-hidden">Email Address</label>
-                                    <input type="email" id="newsletterEmail" name="email" placeholder="Your email..." autocomplete="email" required>
+                                    <input type="email" id="newsletterEmail" name="subscriber_email" placeholder="Your email..." autocomplete="email" required>
+                                    <input type="hidden" name="_subject" value="New Newsletter Subscriber">
+                                    <input type="hidden" name="_captcha" value="false">
                                     <button type="submit"><i class="fas fa-paper-plane"></i></button>
                                 </form>
                             </div>
