@@ -29,12 +29,16 @@ function updatePrice() {
     
     if (!selectedValue) {
         displayPriceEl.textContent = '---';
+        const amountInput = document.getElementById('amountToPay');
+        if (amountInput) amountInput.value = '';
         return;
     }
     
     const parts = selectedValue.split('|');
     if (parts.length !== 2) {
         displayPriceEl.textContent = '---';
+        const amountInput = document.getElementById('amountToPay');
+        if (amountInput) amountInput.value = '';
         return;
     }
     
@@ -53,12 +57,20 @@ function updatePrice() {
             displayPriceEl.innerHTML = formattedPrice + ' <small style="font-size: 0.8em; opacity: 0.8;">(' + numberOfNights + ' ' + nightText + ')</small>';
             displayPriceEl.style.color = '#27ae60';
             displayPriceEl.style.fontWeight = 'bold';
+            
+            // Store the amount in hidden input for form submission
+            const amountInput = document.getElementById('amountToPay');
+            if (amountInput) amountInput.value = totalAmount;
         }
     } else {
         const formattedPrice = '₱' + pricePerNight.toLocaleString('en-US');
         displayPriceEl.innerHTML = formattedPrice + ' <small style="font-size: 0.8em; opacity: 0.8;">per night</small>';
         displayPriceEl.style.color = '#27ae60';
         displayPriceEl.style.fontWeight = 'bold';
+        
+        // Store the amount in hidden input for form submission
+        const amountInput = document.getElementById('amountToPay');
+        if (amountInput) amountInput.value = pricePerNight;
     }
 }
 
