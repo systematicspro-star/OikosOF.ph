@@ -101,6 +101,23 @@ window.confirmAndSubmitBooking = function() {
     }, 300);
 };
 
+// Edit booking details function
+window.editBookingDetails = function() {
+    console.log('🔧 Reopening booking form for editing...');
+    
+    // Hide confirmation modal
+    const confirmationModal = bootstrap.Modal.getInstance(document.getElementById('bookingConfirmationModal'));
+    if (confirmationModal) {
+        confirmationModal.hide();
+    }
+
+    // Show booking form modal again
+    const contactModal = new bootstrap.Modal(document.getElementById('contactModal'));
+    setTimeout(() => {
+        contactModal.show();
+    }, 300);
+};
+
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
     // Price update listeners
