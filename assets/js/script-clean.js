@@ -19,13 +19,17 @@ function updatePrice() {
     const packageSelect = document.getElementById('packageName');
     const checkInInput = document.getElementById('bookingCheckIn');
     const checkOutInput = document.getElementById('bookingCheckOut');
+    const guestsInput = document.getElementById('bookingGuests');
+    const tentsInput = document.getElementById('bookingTents');
     const displayPriceEl = document.getElementById('displayPrice');
     
     if (!packageSelect || !displayPriceEl) return;
     
     const selectedValue = packageSelect.value;
-   const checkInDate = checkInInput ? checkInInput.value : '';
+    const checkInDate = checkInInput ? checkInInput.value : '';
     const checkOutDate = checkOutInput ? checkOutInput.value : '';
+    const guests = parseInt(guestsInput?.value || 0);
+    const tents = parseInt(tentsInput?.value || 0);
     
     if (!selectedValue) {
         displayPriceEl.textContent = '---';
@@ -43,6 +47,9 @@ function updatePrice() {
     }
     
     const pricePerNight = parseInt(parts[1]);
+    const guestAddOn = guests * 400;  // 400 per guest
+    const tentAddOn = tents * 500;    // 500 per tent
+    const addOnsTotal = guestAddOn + tentAddOn;
     
     if (checkInDate && checkOutDate) {
         const checkIn = new Date(checkInDate);
@@ -51,10 +58,12 @@ function updatePrice() {
         const numberOfNights = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         
         if (numberOfNights > 0) {
-            const totalAmount = numberOfNights * pricePerNight;
+            const packageTotal = numberOfNights * pricePerNight;
+            const totalAmount = packageTotal + addOnsTotal;
             const formattedPrice = '₱' + totalAmount.toLocaleString('en-US');
             const nightText = numberOfNights > 1 ? 'nights' : 'night';
-            displayPriceEl.innerHTML = formattedPrice + ' <small style="font-size: 0.8em; opacity: 0.8;">(' + numberOfNights + ' ' + nightText + ')</small>';
+            const breakdownText = addOnsTotal > 0 ? ` + Add Ons: ₱${addOnsTotal.toLocaleString('en-US')}` : '';
+            displayPriceEl.innerHTML = formattedPrice + ' <small style="font-size: 0.8em; opacity: 0.8;">(' + numberOfNights + ' ' + nightText + breakdownText + ')</small>';
             displayPriceEl.style.color = '#27ae60';
             displayPriceEl.style.fontWeight = 'bold';
             
@@ -63,14 +72,16 @@ function updatePrice() {
             if (amountInput) amountInput.value = totalAmount;
         }
     } else {
-        const formattedPrice = '₱' + pricePerNight.toLocaleString('en-US');
-        displayPriceEl.innerHTML = formattedPrice + ' <small style="font-size: 0.8em; opacity: 0.8;">per night</small>';
+        const totalAmount = pricePerNight + addOnsTotal;
+        const formattedPrice = '₱' + totalAmount.toLocaleString('en-US');
+        const breakdownText = addOnsTotal > 0 ? ` + Add Ons: ₱${addOnsTotal.toLocaleString('en-US')}` : '';
+        displayPriceEl.innerHTML = formattedPrice + ' <small style="font-size: 0.8em; opacity: 0.8;">per night' + breakdownText + '</small>';
         displayPriceEl.style.color = '#27ae60';
         displayPriceEl.style.fontWeight = 'bold';
         
         // Store the amount in hidden input for form submission
         const amountInput = document.getElementById('amountToPay');
-        if (amountInput) amountInput.value = pricePerNight;
+        if (amountInput) amountInput.value = totalAmount;
     }
 }
 
@@ -136,6 +147,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const packageSelect = document.getElementById('packageName');
     const checkInInput = document.getElementById('bookingCheckIn');
     const checkOutInput = document.getElementById('bookingCheckOut');
+    const guestsInput = document.getElementById('bookingGuests');
+    const tentsInput = document.getElementById('bookingTents');
     const contactModal = document.getElementById('contactModal');
 
     if (packageSelect) {
@@ -149,6 +162,14 @@ document.addEventListener('DOMContentLoaded', function() {
     if (checkOutInput) {
         checkOutInput.addEventListener('change', updatePrice);
         checkOutInput.addEventListener('input', updatePrice);
+    }
+    if (guestsInput) {
+        guestsInput.addEventListener('change', updatePrice);
+        guestsInput.addEventListener('input', updatePrice);
+    }
+    if (tentsInput) {
+        tentsInput.addEventListener('change', updatePrice);
+        tentsInput.addEventListener('input', updatePrice);
     }
     if (contactModal) {
         contactModal.addEventListener('show.bs.modal', function() {
@@ -223,7 +244,12 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('confirmCheckOut').textContent = formattedCheckOut;
             document.getElementById('confirmFullName').textContent = fullName;
             document.getElementById('confirmGuests').textContent = formData.get('guests') || '---';
-            document.getElementById('confirmAmount').textContent = '₱' + price.toLocaleString();
+            document.getElementById('confirmTents').textContent = formData.get('tents') || '0';
+            
+            // Get the calculated amount from hidden input (includes add-ons)
+            const amountInput = document.getElementById('amountToPay');
+            const totalAmount = amountInput?.value || '0';
+            document.getElementById('confirmAmount').textContent = '₱' + parseInt(totalAmount).toLocaleString();
 
             // Store form data globally
             window.pendingBookingForm = bookingForm;

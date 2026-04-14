@@ -1118,6 +1118,12 @@ Reconnect with nature while enjoying a peaceful, eco-friendly escape that nouris
                                 <strong id="confirmGuests" style="font-size: 1rem;">---</strong>
                             </div>
                         </div>
+                        <div class="booking-detail-row mb-3">
+                            <div style="display: flex; justify-content: space-between; align-items: center; color: white; padding-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.2);">
+                                <span style="font-size: 0.9rem; opacity: 0.9;"><i class="fas fa-campground me-2"></i>Tents (Add Ons):</span>
+                                <strong id="confirmTents" style="font-size: 1rem;">---</strong>
+                            </div>
+                        </div>
                         <div class="booking-detail-row">
                             <div style="display: flex; justify-content: space-between; align-items: center; color: white;">
                                 <span style="font-size: 0.9rem; opacity: 0.9;"><i class="fas fa-peso-sign me-2"></i>Amount to Pay:</span>
@@ -1377,10 +1383,31 @@ Reconnect with nature while enjoying a peaceful, eco-friendly escape that nouris
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="bookingGuests" class="form-label">
-                                        <i class="fas fa-users form-icon"></i>Number of Guests
+                                        <i class="fas fa-users form-icon"></i>Number of Guests (Add Ons: ₱400/person)
                                     </label>
                                     <div class="input-wrapper">
                                         <input type="number" id="bookingGuests" class="form-control form-input" placeholder="How many guests?" name="guests" min="1" required>
+                                        <div class="validation-icon">
+                                            <i class="fas fa-check-circle"></i>
+                                        </div>
+                                    </div>
+                                    <small class="form-feedback"></small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add Ons Section -->
+                    <div class="form-section">
+                        <h6 class="section-header"><i class="fas fa-plus-circle me-2"></i>Add Ons</h6>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="bookingTents" class="form-label">
+                                        <i class="fas fa-campground form-icon"></i>Tents (Add Ons: ₱500/tent)
+                                    </label>
+                                    <div class="input-wrapper">
+                                        <input type="number" id="bookingTents" class="form-control form-input" placeholder="Number of tents" name="tents" min="0" value="0">
                                         <div class="validation-icon">
                                             <i class="fas fa-check-circle"></i>
                                         </div>
