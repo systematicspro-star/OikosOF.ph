@@ -204,8 +204,10 @@
                     <p class="text-muted">Subscribe to our newsletter to get notifications about new events, special offers, and farm updates.</p>
                 </div>
                 <div class="col-lg-6">
-                    <form id="newsLetterForm" class="d-flex gap-2">
-                        <input type="email" class="form-control" placeholder="Enter your email" required>
+                    <form action="https://formspree.io/f/mkraipzq" method="POST" id="newsLetterForm" class="d-flex gap-2">
+                        <input type="email" class="form-control" name="subscriber_email" placeholder="Enter your email" required>
+                        <input type="hidden" name="_subject" value="New Newsletter Subscriber">
+                        <input type="hidden" name="_captcha" value="false">
                         <button type="submit" class="btn btn-success px-4">Subscribe</button>
                     </form>
                 </div>
@@ -236,9 +238,11 @@ Reconnect with nature while enjoying a peaceful, eco-friendly escape that nouris
                             <!-- Newsletter -->
                             <div class="newsletter-section">
                                 <h6 class="newsletter-title">Subscribe for Updates</h6>
-                                <form class="newsletter-form" id="footerNewsletterForm">
+                                <form class="newsletter-form" action="https://formspree.io/f/mkraipzq" method="POST" id="footerNewsletterForm">
                                     <label for="footerNewsletterEmail" class="visually-hidden">Email Address</label>
-                                    <input type="email" id="footerNewsletterEmail" name="email" placeholder="Your email..." autocomplete="email" required>
+                                    <input type="email" id="footerNewsletterEmail" name="subscriber_email" placeholder="Your email..." autocomplete="email" required>
+                                    <input type="hidden" name="_subject" value="New Newsletter Subscriber">
+                                    <input type="hidden" name="_captcha" value="false">
                                     <button type="submit"><i class="fas fa-paper-plane"></i></button>
                                 </form>
                             </div>
@@ -593,12 +597,8 @@ Reconnect with nature while enjoying a peaceful, eco-friendly escape that nouris
             // Refresh calendar data every 30 minutes
             setInterval(fetchUnavailableDates, CACHE_DURATION);
             
-            // Newsletter form
-            document.getElementById('newsLetterForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                alert('Thank you for subscribing! You will receive event updates at your email.');
-                this.reset();
-            });
+            // Newsletter form submission - now handled by Formspree
+            // Form will automatically submit to https://formspree.io/f/mkraipzq
         });
     </script>
 </body>
