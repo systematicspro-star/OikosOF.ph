@@ -266,4 +266,98 @@ document.addEventListener('DOMContentLoaded', function() {
             confirmationModal.show();
         });
     }
+
+    // Newsletter form submission handler
+    const newsletterForm = document.getElementById('newsletterForm');
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formspreeUrl = this.getAttribute('data-formspree') || this.getAttribute('action');
+            const email = this.querySelector('input[type="email"]').value.trim();
+            
+            if (!isValidEmail(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+
+            // Get form data
+            const formData = new FormData(this);
+            
+            // Show modal
+            const modal = new bootstrap.Modal(document.getElementById('newsletterSuccessModal'));
+            modal.show();
+
+            // Submit to Formspree via fetch (prevents redirect)
+            if (formspreeUrl) {
+                fetch(formspreeUrl, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => {
+                    console.log('Newsletter submitted successfully');
+                    this.reset();
+                })
+                .catch(error => {
+                    console.error('Error submitting newsletter:', error);
+                });
+            }
+
+            // Auto-close modal after 2.5 seconds
+            setTimeout(() => {
+                const instance = bootstrap.Modal.getInstance(document.getElementById('newsletterSuccessModal'));
+                if (instance) instance.hide();
+            }, 2500);
+        });
+    }
+
+    // Handle newsletter forms in Events page (footer newsletter form)
+    const footerNewsletterForm = document.getElementById('footerNewsletterForm');
+    if (footerNewsletterForm) {
+        footerNewsletterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formspreeUrl = this.getAttribute('action');
+            const email = this.querySelector('input[type="email"]').value.trim();
+            
+            if (!isValidEmail(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+
+            // Get form data
+            const formData = new FormData(this);
+            
+            // Show modal
+            const modal = new bootstrap.Modal(document.getElementById('newsletterSuccessModal'));
+            modal.show();
+
+            // Submit to Formspree via fetch (prevents redirect)
+            if (formspreeUrl) {
+                fetch(formspreeUrl, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => {
+                    console.log('Newsletter submitted successfully');
+                    this.reset();
+                })
+                .catch(error => {
+                    console.error('Error submitting newsletter:', error);
+                });
+            }
+
+            // Auto-close modal after 2.5 seconds
+            setTimeout(() => {
+                const instance = bootstrap.Modal.getInstance(document.getElementById('newsletterSuccessModal'));
+                if (instance) instance.hide();
+            }, 2500);
+        });
+    }
 });

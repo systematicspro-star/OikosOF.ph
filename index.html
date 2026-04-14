@@ -747,7 +747,7 @@ Reconnect with nature while enjoying a peaceful, eco-friendly escape that nouris
                             <!-- Newsletter -->
                             <div class="newsletter-section">
                                 <h6 class="newsletter-title">Subscribe for Updates</h6>
-                                <form class="newsletter-form" action="https://formspree.io/f/xzdybnnp" method="POST" id="newsletterForm">
+                                <form class="newsletter-form" id="newsletterForm" data-formspree="https://formspree.io/f/xzdybnnp">
                                     <label for="newsletterEmail" class="visually-hidden">Email Address</label>
                                     <input type="email" id="newsletterEmail" name="subscriber_email" placeholder="Your email..." autocomplete="email" required>
                                     <input type="hidden" name="_subject" value="New Newsletter Subscriber">
@@ -1607,6 +1607,21 @@ Reconnect with nature while enjoying a peaceful, eco-friendly escape that nouris
                 <div class="modal-footer border-top">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-success" id="saveCookieSettings" data-bs-dismiss="modal">Save Settings</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Newsletter Success Modal -->
+    <div class="modal fade" id="newsletterSuccessModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-center border-0" style="border-radius: 15px; overflow: hidden;">
+                <div class="modal-body py-5" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
+                    <div class="mb-4">
+                        <i class="fas fa-paper-plane" style="font-size: 80px; color: white; animation: bounceIn 0.6s ease-out;"></i>
+                    </div>
+                    <h4 class="text-white mb-3">Send</h4>
+                    <p class="text-white-50 mb-0">Thank you for subscribing! Check your email for updates.</p>
                 </div>
             </div>
         </div>
