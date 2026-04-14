@@ -636,71 +636,9 @@ function updateActiveLink() {
 
 
 // ================================
-// NEWSLETTER FORM
+// NEWSLETTER FORM - DEPRECATED
 // ================================
-
-document.addEventListener('DOMContentLoaded', function() {
-    const newsletterForm = document.getElementById('newsletterForm');
-    
-    if (newsletterForm) {
-        newsletterForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const emailInput = this.querySelector('input[type="email"]');
-            const email = emailInput.value.trim();
-            const submitBtn = this.querySelector('button');
-            
-            // Validate email
-            if (!isValidEmail(email)) {
-                showNewsletterFeedback('Please enter a valid email', 'error');
-                return;
-            }
-            
-            // Show loading state
-            const originalContent = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-            submitBtn.disabled = true;
-            
-            // Simulate submission (replace with actual API call if needed)
-            setTimeout(() => {
-                // Store email in localStorage
-                let subscribers = JSON.parse(localStorage.getItem('newsletter_subscribers')) || [];
-                if (!subscribers.includes(email)) {
-                    subscribers.push(email);
-                    localStorage.setItem('newsletter_subscribers', JSON.stringify(subscribers));
-                }
-                
-                showNewsletterFeedback('Thank you for subscribing!', 'success');
-                emailInput.value = '';
-                submitBtn.innerHTML = originalContent;
-                submitBtn.disabled = false;
-            }, 1000);
-        });
-    }
-});
-
-function showNewsletterFeedback(message, type) {
-    // Create feedback element
-    const feedback = document.createElement('div');
-    feedback.className = `alert alert-${type === 'success' ? 'success' : 'danger'} alert-dismissible fade show`;
-    feedback.setAttribute('role', 'alert');
-    feedback.style.position = 'fixed';
-    feedback.style.bottom = '20px';
-    feedback.style.right = '20px';
-    feedback.style.zIndex = '9999';
-    feedback.style.maxWidth = '300px';
-    feedback.innerHTML = `
-        ${message}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    `;
-    
-    document.body.appendChild(feedback);
-    
-    // Auto remove after 4 seconds
-    setTimeout(() => {
-        feedback.remove();
-    }, 4000);
-}
+// Newsletter form is now handled by script-clean.js with Formspree integration
 
 // ================================
 // GET STARTED FORM SUBMISSION

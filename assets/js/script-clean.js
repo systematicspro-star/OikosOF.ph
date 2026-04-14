@@ -269,12 +269,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Newsletter form submission handler
     const newsletterForm = document.getElementById('newsletterForm');
+    console.log('📧 Newsletter form found:', !!newsletterForm);
     if (newsletterForm) {
         newsletterForm.addEventListener('submit', function(e) {
             e.preventDefault();
+            console.log('📧 Newsletter form submitted');
 
             const formspreeUrl = this.getAttribute('data-formspree') || this.getAttribute('action');
             const email = this.querySelector('input[type="email"]').value.trim();
+            console.log('📧 Email:', email, 'URL:', formspreeUrl);
             
             if (!isValidEmail(email)) {
                 alert('Please enter a valid email address.');
@@ -285,8 +288,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const formData = new FormData(this);
             
             // Show modal
-            const modal = new bootstrap.Modal(document.getElementById('newsletterSuccessModal'));
-            modal.show();
+            const modalEl = document.getElementById('newsletterSuccessModal');
+            console.log('📧 Modal element found:', !!modalEl);
+            if (modalEl) {
+                const modal = new bootstrap.Modal(modalEl);
+                modal.show();
+                console.log('📧 Modal shown');
+            } else {
+                console.error('📧 Modal not found!');
+                alert('Thank you for subscribing!');
+            }
 
             // Submit to Formspree via fetch (prevents redirect)
             if (formspreeUrl) {
@@ -298,11 +309,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 })
                 .then(response => {
-                    console.log('Newsletter submitted successfully');
+                    console.log('✅ Newsletter submitted successfully');
                     this.reset();
                 })
                 .catch(error => {
-                    console.error('Error submitting newsletter:', error);
+                    console.error('❌ Error submitting newsletter:', error);
                 });
             }
 
@@ -316,12 +327,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Handle newsletter forms in Events page (footer newsletter form)
     const footerNewsletterForm = document.getElementById('footerNewsletterForm');
+    console.log('📧 Footer newsletter form found:', !!footerNewsletterForm);
     if (footerNewsletterForm) {
         footerNewsletterForm.addEventListener('submit', function(e) {
             e.preventDefault();
+            console.log('📧 Footer newsletter form submitted');
 
             const formspreeUrl = this.getAttribute('action');
             const email = this.querySelector('input[type="email"]').value.trim();
+            console.log('📧 Email:', email, 'URL:', formspreeUrl);
             
             if (!isValidEmail(email)) {
                 alert('Please enter a valid email address.');
@@ -332,8 +346,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const formData = new FormData(this);
             
             // Show modal
-            const modal = new bootstrap.Modal(document.getElementById('newsletterSuccessModal'));
-            modal.show();
+            const modalEl = document.getElementById('newsletterSuccessModal');
+            console.log('📧 Modal element found:', !!modalEl);
+            if (modalEl) {
+                const modal = new bootstrap.Modal(modalEl);
+                modal.show();
+                console.log('📧 Modal shown');
+            } else {
+                console.error('📧 Modal not found!');
+                alert('Thank you for subscribing!');
+            }
 
             // Submit to Formspree via fetch (prevents redirect)
             if (formspreeUrl) {
@@ -345,11 +367,69 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 })
                 .then(response => {
-                    console.log('Newsletter submitted successfully');
+                    console.log('✅ Newsletter submitted successfully');
                     this.reset();
                 })
                 .catch(error => {
-                    console.error('Error submitting newsletter:', error);
+                    console.error('❌ Error submitting newsletter:', error);
+                });
+            }
+
+            // Auto-close modal after 2.5 seconds
+            setTimeout(() => {
+                const instance = bootstrap.Modal.getInstance(document.getElementById('newsletterSuccessModal'));
+                if (instance) instance.hide();
+            }, 2500);
+        });
+    }
+
+    // Handle main newsletter form in Events page (newsLetterForm - note capitalL)
+    const mainNewsletterForm = document.getElementById('newsLetterForm');
+    console.log('📧 Main newsletter form found:', !!mainNewsletterForm);
+    if (mainNewsletterForm) {
+        mainNewsletterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            console.log('📧 Main newsletter form submitted');
+
+            const formspreeUrl = this.getAttribute('action');
+            const email = this.querySelector('input[type="email"]').value.trim();
+            console.log('📧 Email:', email, 'URL:', formspreeUrl);
+            
+            if (!isValidEmail(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+
+            // Get form data
+            const formData = new FormData(this);
+            
+            // Show modal
+            const modalEl = document.getElementById('newsletterSuccessModal');
+            console.log('📧 Modal element found:', !!modalEl);
+            if (modalEl) {
+                const modal = new bootstrap.Modal(modalEl);
+                modal.show();
+                console.log('📧 Modal shown');
+            } else {
+                console.error('📧 Modal not found!');
+                alert('Thank you for subscribing!');
+            }
+
+            // Submit to Formspree via fetch (prevents redirect)
+            if (formspreeUrl) {
+                fetch(formspreeUrl, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => {
+                    console.log('✅ Newsletter submitted successfully');
+                    this.reset();
+                })
+                .catch(error => {
+                    console.error('❌ Error submitting newsletter:', error);
                 });
             }
 
