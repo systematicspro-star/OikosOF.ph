@@ -84,51 +84,21 @@ window.confirmAndSubmitBooking = function() {
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
     }
 
-    const formData = window.pendingFormData;
+    // Submit form directly to Formspree (avoids CORS issues)
+    // Use native form submission instead of Fetch
+    console.log('✅ Submitting booking form to Formspree...');
+    
+    if (messageDiv) {
+        messageDiv.style.display = 'block';
+        messageDiv.style.backgroundColor = '#d4edda';
+        messageDiv.style.color = '#155724';
+        messageDiv.innerHTML = '✅ Submitting your booking...<br>Please wait while we process your request.';
+    }
 
-    fetch('https://formspree.io/f/mykdpbrk', {
-        method: 'POST',
-        body: formData,
-        headers: { 'Accept': 'application/json' }
-    })
-    .then(response => {
-        if (response.ok) return response.json();
-        throw new Error('Submission failed');
-    })
-    .then(data => {
-        console.log('✅ Booking submitted to Formspree');
-        if (messageDiv) {
-            messageDiv.style.display = 'block';
-            messageDiv.style.backgroundColor = '#d4edda';
-            messageDiv.style.color = '#155724';
-            messageDiv.innerHTML = '✅ Booking submitted successfully!<br>We will contact you shortly to confirm your reservation.';
-        }
-        bookingForm.reset();
-        if (submitBtn) {
-            submitBtn.textContent = '✅ Confirm & Check Availability';
-            submitBtn.disabled = false;
-        }
-        setTimeout(() => {
-            if (messageDiv) messageDiv.style.display = 'none';
-            if (confirmationModal) confirmationModal.hide();
-        }, 3000);
-    })
-    .catch(error => {
-        console.error('❌ Error:', error);
-        if (messageDiv) {
-            messageDiv.style.display = 'block';
-            messageDiv.style.backgroundColor = '#f8d7da';
-            messageDiv.style.color = '#721c24';
-            messageDiv.innerHTML = '❌ Error submitting booking.<br>Error: ' + error.message;
-        }
-        if (submitBtn) {
-            submitBtn.textContent = '🔒 Confirm & Check Availability';
-            submitBtn.disabled = false;
-        }
-        setTimeout(() => {
-            if (messageDiv) messageDiv.style.display = 'none';
-        }, 5000);
-    });
+    // Submit the form (Formspree will handle the POST)
+    setTimeout(() => {
+        bookingForm.submit();
+    }, 300);
 };
 
 // Initialize on page load
