@@ -141,6 +141,136 @@ window.editBookingDetails = function() {
     }, 300);
 };
 
+// ================================
+// PRODUCT LIST DATA AND MODAL
+// ================================
+
+const productListData = {
+    'Fruits': [
+        { item: 'Banana Kardava', pack: '25 kg / week' },
+        { item: 'Banana Mondo*', pack: 'per kg' },
+        { item: 'Banana Morado*', pack: 'per kg' },
+        { item: 'Banana Sab-a*', pack: 'per kg' },
+        { item: 'Banana Senyorita*', pack: 'per kg' },
+        { item: 'Banana Tindok*', pack: 'per kg' },
+        { item: 'Banana Tondan*', pack: 'per kg' },
+        { item: 'Biasong*', pack: 'per kg' },
+        { item: 'Bisaya Bayabas (aromatic)', pack: 'per kg' },
+        { item: 'Doldol (Seasonal)', pack: '1 kg / week' },
+        { item: 'Dragon Fruit* (Seasonal)', pack: 'per kg' },
+        { item: 'Guapple', pack: '3 kg / week' },
+        { item: 'Inyam (Seasonal)', pack: 'per kg' },
+        { item: 'Katmon* (Seasonal)', pack: '2 kg / week' },
+        { item: 'Kamias / Iba (Seasonal)', pack: '200 g / week' },
+        { item: 'Karamay / Chinese Iba*', pack: '200 g / week' },
+        { item: 'Lemon Meyer', pack: 'per kg' },
+        { item: 'Lemon Lime', pack: 'per kg' },
+        { item: 'Lemonsito', pack: 'per kg' },
+        { item: 'Lomboy* (Seasonal)', pack: '5 kg / week' },
+        { item: 'Mansanitas', pack: '100 g' },
+        { item: 'Miracle Fruit', pack: 'per piece' },
+        { item: 'Mulberries*', pack: '100 g' },
+        { item: 'Papaya Red Lady', pack: 'per kg' },
+        { item: 'Passion Fruit*', pack: 'per kg' },
+        { item: 'Sambag / Tamarind*', pack: 'per kg' },
+        { item: 'Tagpo', pack: '100 g' },
+        { item: 'Tambis* (Seasonal)', pack: 'per kg' }
+    ],
+    'Vegetables': [
+        { item: 'Alugbati / Spinach', pack: '200 g' },
+        { item: 'Himbabao / Alukon*', pack: '100 g' },
+        { item: 'Kamunggay / Moringa', pack: '200 g' },
+        { item: 'Kamunggay / Moringa (de-stemmed)', pack: '200 g' }
+    ],
+    'Herbs': [
+        { item: 'Basil Holy', pack: '50 g' },
+        { item: 'Basil Thai', pack: '50 g' },
+        { item: 'Chives', pack: '100 g' },
+        { item: 'Cilantro Mexican', pack: '200 g' },
+        { item: 'Cilantro', pack: '100 g' },
+        { item: 'Indian Curry', pack: '50 g' },
+        { item: 'Guava Fresh Leaves', pack: '200 g' },
+        { item: 'Lavender', pack: '50 g' },
+        { item: 'Mint Pepper', pack: '50 g' },
+        { item: 'Mint Eucalyptus', pack: '50 g' },
+        { item: 'Oregano / Kalabo', pack: '50 g' },
+        { item: 'Oregano Italian', pack: '50 g' },
+        { item: 'Pandan', pack: '100 g' },
+        { item: 'Root Beer', pack: '50 g' },
+        { item: 'Rosemary', pack: '100 g' },
+        { item: 'Sibuyas Dahonan', pack: '100 g' },
+        { item: 'Tarragon', pack: '25 g' },
+        { item: 'Thyme', pack: '25 g' }
+    ],
+    'Spices': [
+        { item: 'Achuete / Annatto (Dried)', pack: '100 g' },
+        { item: 'Bantiyong / Ash Gourd', pack: 'per kg' },
+        { item: 'Ginger / Luy-a Dulaw', pack: '100 g' },
+        { item: 'Ginger / Luy-a Bisaya', pack: '100 g' },
+        { item: 'Ginger / Luy-a', pack: '100 g' },
+        { item: 'Lemongrass', pack: '100 g' },
+        { item: 'Sili Espada', pack: '100 g' },
+        { item: 'Sili Kulikot', pack: '100 g' },
+        { item: 'Sili Puti', pack: '100 g' },
+        { item: 'Sugarcane / Tubó Tapol (Fresh)', pack: 'per kg' },
+        { item: 'Turmeric', pack: '100 g' },
+        { item: 'Cinnamon Fresh Leaves (Mana Mindanao)', pack: '10 g' },
+        { item: 'Cinnamon Air-Dried Leaves (Mana Mindanao)', pack: '10 g' },
+        { item: 'Cinnamon Fresh Leaves (Kaningag Cebu)', pack: '5 g' },
+        { item: 'Cinnamon Air-Dried Leaves (Kaningag Cebu)', pack: '5 g' }
+    ],
+    'Edible Flowers': [
+        { item: 'Banana Pusô', pack: '10 pcs' },
+        { item: 'Blue Ternate', pack: '25 g' },
+        { item: 'Bougainvillea', pack: '25 g' },
+        { item: 'Hibiscus', pack: '50 g' },
+        { item: 'Marigold Orange', pack: '50 g' },
+        { item: 'Rose Red Local', pack: '50 g' },
+        { item: 'Roselle (Seasonal)', pack: '100 g' }
+    ],
+    'From the Wild': [
+        { item: 'Taklong / Tree Snail Escargot', pack: '1 kg' },
+        { item: 'Pepinito', pack: '100 g' },
+        { item: 'Wild Passion Fruit / Sto Papa', pack: '100 g' }
+    ],
+    'Eggs & Meat': [
+        { item: 'Native Eggs', pack: '1 tray / week' },
+        { item: 'Native Pig Hybrid (Live)*', pack: 'per kg' }
+    ],
+    'Slow Fresh Drinks': [
+        { item: 'Tubâ', pack: '0–12 hours' },
+        { item: 'Tubâ with Tungog', pack: '0–12 hours' },
+        { item: 'Tubâ', pack: '12–24 hours' },
+        { item: 'Tubâ with Tungog', pack: '12–24 hours' },
+        { item: 'Coconut Buko', pack: 'per piece' },
+        { item: 'Coconut Buko (50+)', pack: 'per piece' }
+    ]
+};
+
+// Show product list in modal
+window.showProductList = function(category) {
+    const modal = new bootstrap.Modal(document.getElementById('productsListModal'));
+    const products = productListData[category] || [];
+    
+    // Update modal title
+    document.getElementById('productModalTitle').textContent = category;
+    
+    // Populate table
+    const tableBody = document.getElementById('productListBody');
+    tableBody.innerHTML = '';
+    
+    products.forEach(product => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${product.item}</td>
+            <td>${product.pack}</td>
+        `;
+        tableBody.appendChild(row);
+    });
+    
+    modal.show();
+};
+
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
     // Price update listeners
