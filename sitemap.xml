@@ -1,26 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <!-- Homepage -->
+  <!-- Homepage - Highest Priority -->
   <url>
-    <loc>https://oikosof.netlify.app/</loc>
-    <lastmod>2026-06-02</lastmod>
+    <loc>https://oikosof.netlify.app/index.html</loc>
+    <lastmod>2026-06-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
-  <!-- Optional future pages (add these if they exist) -->
+  <!-- Direct homepage URL -->
   <url>
-    <loc>https://oikosof.netlify.app/events</loc>
-    <lastmod>2026-06-02</lastmod>
+    <loc>https://oikosof.netlify.app/</loc>
+    <lastmod>2026-06-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Events Page -->
+  <url>
+    <loc>https://oikosof.netlify.app/Events.html</loc>
+    <lastmod>2026-06-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- FAQs Page -->
+  <url>
+    <loc>https://oikosof.netlify.app/FAQs.html</loc>
+    <lastmod>2026-06-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
+  <!-- Partnership Page -->
   <url>
-    <loc>https://oikosof.netlify.app/FAQs</loc>
-    <lastmod>2026-06-02</lastmod>
+    <loc>https://oikosof.netlify.app/Partnership.html</loc>
+    <lastmod>2026-06-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+
+  <!-- Bookings Page -->
+  <url>
+    <loc>https://oikosof.netlify.app/bookings.json</loc>
+    <lastmod>2026-06-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>
