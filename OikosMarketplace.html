@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OikosOF Marketplace - Premium Organic Products & Pork</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Book Antiqua', 'Palatino', serif;
+            background-color: #f9f7f4;
+            color: #3d3d3d;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2d5016 0%, #3d6b1f 100%);
+            border-bottom: 3px solid #D2B48C;
+            padding: 16px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            gap: 40px;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 700;
+            color: #f9f7f4;
+            letter-spacing: -0.5px;
+            font-family: 'Book Antiqua', serif;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            white-space: nowrap;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: 40px;
+            object-fit: contain;
+            filter: brightness(1.1);
+        }
+
+        .logo-text {
+            font-size: 20px;
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 400px;
+            display: flex;
+            align-items: center;
+            background: white;
+            border: 2px solid #D2B48C;
+            border-radius: 6px;
+            padding: 0 12px;
+            transition: all 0.2s;
+        }
+
+        .search-bar:focus-within {
+            border-color: #2d5016;
+            box-shadow: 0 0 0 3px rgba(45,80,22,0.2);
+        }
+
+        .search-bar input {
+            border: none;
+            background: none;
+            flex: 1;
+            padding: 10px 8px;
+            font-size: 14px;
+            outline: none;
+            font-family: 'Book Antiqua', serif;
+        }
+
+        .search-bar input::placeholder {
+            color: #a0938f;
+        }
+
+        .cart-icon {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 8px 16px;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            border-radius: 4px;
+            transition: all 0.2s;
+            font-family: 'Book Antiqua', serif;
+        }
+
+        .cart-icon:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .cart-count {
+            background-color: #3d6b1f;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .section-header {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #2d5016;
+            font-family: 'Book Antiqua', serif;
+        }
+
+        .filters {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            border: 2px solid #D2B48C;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .filter-btn {
+            padding: 9px 18px;
+            border: 2px solid #D2B48C;
+            background: white;
+            color: #2d5016;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.2s;
+            font-family: 'Book Antiqua', serif;
+        }
+
+        .filter-btn:hover {
+            border-color: #2d5016;
+            background: #f0ebe5;
+        }
+
+        .filter-btn.active {
+            background: #2d5016;
+            color: white;
+            border-color: #2d5016;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 2px solid #D2B48C;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+            border-color: #3d6b1f;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #f0f0f0 0%, #e8e8e8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: #ccc;
+            flex-shrink: 0;
+            object-fit: cover;
+            overflow: hidden;
+        }
+
+        .product-info {
+            padding: 12px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-name {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #2d5016;
+            line-height: 1.4;
+            min-height: 32px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            font-family: 'Book Antiqua', serif;
+        }
+
+        .product-quantity {
+            font-size: 12px;
+            color: #a0938f;
+            margin-bottom: 8px;
+            font-family: 'Book Antiqua', serif;
+        }
+
+        .product-price-section {
+            margin-bottom: 12px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .product-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: #3d6b1f;
+            margin-bottom: 4px;
+            font-family: 'Book Antiqua', serif;
+        }
+
+        .product-controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .quantity-input {
+            width: 50px;
+            padding: 6px 8px;
+            border: 1px solid #D2B48C;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 12px;
+            font-family: 'Book Antiqua', serif;
+            color: #2d5016;
+        }
+
+        .add-btn {
+            flex: 1;
+            padding: 8px;
+            background: #3d6b1f;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            transition: all 0.2s;
+            font-family: 'Book Antiqua', serif;
+        }
+
+        .add-btn:hover {
+            background: #2d5016;
+        }
+
+        .add-btn:active {
+            transform: scale(0.98);
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 60px 20px;
+            color: #a0938f;
+            font-size: 16px;
+            font-family: 'Book Antiqua', serif;
+            background: #f9f7f4;
+            border-radius: 8px;
+            grid-column: 1 / -1;
+        }
+
+        /* Cart Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.2s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 3% auto;
+            padding: 0;
+            border-radius: 4px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 85vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            animation: slideIn 0.2s;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            border-bottom: 2px solid #D2B48C;
+            background: #f9f7f4;
+        }
+
+        .modal-header h2 {
+            color: #2d5016;
+            font-size: 18px;
+            font-weight: 700;
+            font-family: 'Book Antiqua', serif;
+        }
+
+        .close-btn {
+            font-size: 24px;
+            font-weight: bold;
+            color: #a0938f;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s;
+        }
+
+        .close-btn:hover {
+            color: #2d5016;
+        }
+
+        .modal-body {
+            overflow-y: auto;
+            flex: 1;
+            padding: 20px 24px;
+        }
+
+        .cart-items {
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 16px 0;
+            border-bottom: 1px solid #e8e8e8;
+            gap: 12px;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: 600;
+            color: #2d5016;
+            font-size: 14px;
+            margin-bottom: 4px;
+            font-family: 'Book Antiqua', serif;
+        }
+
+        .cart-item-price {
+            font-size: 13px;
+            color: #a0938f;
+            margin-bottom: 8px;
+        }
+
+        .cart-item-qty {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: fit-content;
+        }
+
+        .qty-btn {
+            width: 28px;
+            height: 28px;
+            border: 1px solid #D2B48C;
+            background: white;
+            cursor: pointer;
+            border-radius: 3px;
+            font-weight: bold;
+            color: #2d5016;
+            font-size: 14px;
+            transition: all 0.2s;
+            font-family: 'Book Antiqua', serif;
+        }
+
+        .qty-btn:hover {
+            border-color: #2d5016;
+            background: #f0ebe5;
+        }
+
+        .cart-item-total {
+            font-weight: 700;
+            color: #3d6b1f;
+            font-size: 14px;
+            text-align: right;
+            font-family: 'Book Antiqua', serif;
+        }
+
+        .remove-btn {
+            background: none;
+            color: #e74c3c;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s;
+            font-family: 'Book Antiqua', serif;
+        }
+
+        .remove-btn:hover {
+            background: #ffe8e8;
+        }
+
+        .modal-footer {
+            border-top: 2px solid #D2B48C;
+            padding: 20px 24px;
+            background: #f9f7f4;
+        }
+
+        .cart-summary {
+            background: #f0ebe5;
+            padding: 16px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            border: 1px solid #D2B48C;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: #2d5016;
+            font-family: 'Book Antiqua', serif;
+        }
+
+        .summary-row.total {
+            font-size: 16px;
+            font-weight: 700;
+            color: #3d6b1f;
+            border-top: 1px solid #D2B48C;
+            padding-top: 12px;
+            margin-top: 12px;
+            margin-bottom: 0;
+            font-family: 'Book Antiqua', serif;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 12px;
+            background: #3d6b1f;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Book Antiqua', serif;
+        }
+
+        .checkout-btn:hover {
+            background: #2d5016;
+        }
+
+        .checkout-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .order-form {
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #2d5016;
+            font-size: 13px;
+            font-family: 'Book Antiqua', serif;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #D2B48C;
+            border-radius: 4px;
+            font-family: 'Book Antiqua', serif;
+            font-size: 13px;
+            transition: border-color 0.2s;
+            color: #2d5016;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2d5016;
+            box-shadow: 0 0 0 2px rgba(45,80,22,0.15);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .success-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .success-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #27ae60;
+            margin-bottom: 8px;
+        }
+
+        .success-text {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 20px;
+        }
+
+        /* Minimum Order Alert Modal Styles */
+        .minimum-order-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .minimum-order-modal.show {
+            display: flex;
+        }
+
+        .minimum-order-content {
+            background: linear-gradient(135deg, #f9f7f4 0%, #f5f1ec 100%);
+            border-radius: 12px;
+            max-width: 420px;
+            width: 90%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            border: 2px solid #D2B48C;
+            overflow: hidden;
+        }
+
+        .minimum-order-header {
+            background: linear-gradient(135deg, #2d5016 0%, #3d6b1f 100%);
+            padding: 24px 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .minimum-order-icon {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .minimum-order-header h2 {
+            font-family: 'Book Antiqua', Palatino, serif;
+            font-size: 22px;
+            font-weight: 700;
+            margin: 0;
+            color: #fff;
+        }
+
+        .minimum-order-body {
+            padding: 28px 24px;
+        }
+
+        .product-name-alert {
+            font-family: 'Book Antiqua', Palatino, serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: #2d5016;
+            margin-bottom: 20px;
+            padding: 12px;
+            background-color: #f0ebe5;
+            border-left: 4px solid #3d6b1f;
+            border-radius: 4px;
+        }
+
+        .requirement-box {
+            background-color: #fff;
+            border: 2px solid #D2B48C;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .requirement-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Book Antiqua', Palatino, serif;
+            margin-bottom: 12px;
+        }
+
+        .requirement-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .requirement-label {
+            font-size: 14px;
+            color: #555;
+            font-weight: 600;
+        }
+
+        .requirement-value {
+            font-size: 14px;
+            font-weight: 700;
+            color: #2d5016;
+            background-color: #f0ebe5;
+            padding: 6px 12px;
+            border-radius: 4px;
+            min-width: 80px;
+            text-align: right;
+        }
+
+        .minimum-order-message {
+            font-family: 'Book Antiqua', Palatino, serif;
+            font-size: 13px;
+            color: #666;
+            text-align: center;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .minimum-order-footer {
+            text-align: center;
+            padding: 0;
+        }
+
+        .minimum-order-footer .checkout-btn {
+            width: 100%;
+            border-radius: 0;
+            border: none;
+        }
+
+        @media (max-width: 768px) {
+            .minimum-order-content {
+                max-width: 90vw;
+            }
+
+            .minimum-order-header h2 {
+                font-size: 18px;
+            }
+
+            .minimum-order-body {
+                padding: 20px 16px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 12px;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 12px;
+                padding: 0 16px;
+            }
+
+            .search-bar {
+                max-width: 100%;
+            }
+
+            .filter-buttons {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 8px;
+            }
+
+            .filter-btn {
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 50% auto;
+                max-height: 90vh;
+            }
+
+            .container {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <img src="assets/images/OikosOF.png" alt="OikosOF Logo" class="logo-img">
+                <span class="logo-text">OikosOF Marketplace</span>
+            </div>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search products...">
+            </div>
+            <div class="cart-icon" onclick="openCart()">
+                <span>🛒 Cart</span>
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Filters -->
+        <div class="filters">
+            <div class="section-header">Categories</div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterProducts('all')">All Products</button>
+                <button class="filter-btn" onclick="filterProducts('pork')">Pork & Lechon</button>
+                <button class="filter-btn" onclick="filterProducts('crops')">Flowers & Crops</button>
+                <button class="filter-btn" onclick="filterProducts('herbs')">Herbs</button>
+                <button class="filter-btn" onclick="filterProducts('fruits')">Fruits</button>
+                <button class="filter-btn" onclick="filterProducts('spices')">Spices</button>
+                <button class="filter-btn" onclick="filterProducts('vegetables')">Vegetables</button>
+                <button class="filter-btn" onclick="filterProducts('wild')">Wild Products</button>
+                <button class="filter-btn" onclick="filterProducts('drinks')">Fresh Drinks</button>
+            </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div id="productsContainer" class="products-grid"></div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <div id="cartView">
+                <div class="modal-header">
+                    <h2>Shopping Cart</h2>
+                    <button class="close-btn" onclick="closeCart()">×</button>
+                </div>
+                <div class="modal-body">
+                    <div id="cartItemsContainer" class="cart-items"></div>
+                </div>
+                <div class="modal-footer">
+                    <div class="cart-summary">
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span>₱<span id="subtotal">0.00</span></span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total:</span>
+                            <span>₱<span id="total">0.00</span></span>
+                        </div>
+                    </div>
+                    <button class="checkout-btn" onclick="proceedToCheckout()" id="checkoutBtn">Proceed to Checkout</button>
+                </div>
+            </div>
+
+            <div id="orderForm" class="order-form">
+                <div class="modal-header">
+                    <h2>Order Details</h2>
+                    <button class="close-btn" onclick="backToCart()">←</button>
+                </div>
+                <div class="modal-body">
+                    <form onsubmit="submitOrder(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Full Name *</label>
+                                <input type="text" id="customerName" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Phone Number *</label>
+                                <input type="tel" id="customerPhone" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" id="customerEmail">
+                        </div>
+                        <div class="form-group">
+                            <label>Delivery Address *</label>
+                            <textarea id="customerAddress" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Special Instructions</label>
+                            <textarea id="customerNotes"></textarea>
+                        </div>
+                        <button type="submit" class="checkout-btn">Place Order</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="successMessage" class="success-message">
+                <div class="success-icon">✓</div>
+                <div class="success-title">Order Submitted Successfully</div>
+                <div class="success-text">Thank you for your order. We'll contact you soon to confirm delivery details.</div>
+                <button class="checkout-btn" onclick="resetAndClose()">Continue Shopping</button>
+            </div>
+
+            <!-- Minimum Order Alert Modal -->
+            <div id="minimumOrderAlert" class="minimum-order-modal">
+                <div class="minimum-order-content">
+                    <div class="minimum-order-header">
+                        <div class="minimum-order-icon">⚠️</div>
+                        <h2>Minimum Order Required</h2>
+                    </div>
+                    <div class="minimum-order-body">
+                        <div class="product-name-alert" id="alertProductName"></div>
+                        <div class="requirement-box">
+                            <div class="requirement-row">
+                                <span class="requirement-label">Minimum Required:</span>
+                                <span class="requirement-value" id="alertMinimum"></span>
+                            </div>
+                            <div class="requirement-row">
+                                <span class="requirement-label">You Have:</span>
+                                <span class="requirement-value" id="alertHave"></span>
+                            </div>
+                        </div>
+                        <p class="minimum-order-message">Please increase your order quantity to meet the minimum requirement.</p>
+                    </div>
+                    <div class="minimum-order-footer">
+                        <button class="checkout-btn" onclick="closeMinimumOrderAlert()">Understood</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to generate image URL based on product name
+        function getProductImage(productName) {
+            const searchTerm = encodeURIComponent(productName.split(' - ')[0].toLowerCase());
+            return `https://images.unsplash.com/photo-1488459716781-6f3ee8e584b0?w=400&h=300&fit=crop&q=80&txt=${searchTerm}`;
+        }
+
+        // Products Database
+        const products = [
+            // Pork & Lechon - With Bulk Pricing Tiers
+            { id: 1, name: 'Native Pig - Lapa (All Orders)', category: 'pork', quantity: 'Minimum 150 Units', price: 220, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 2, name: 'Native Pig - Lechon (50kg+)', category: 'pork', quantity: 'Minimum 250 kg', price: 240, image: 'https://images.unsplash.com/photo-1585521199219-c595dc870360?w=400&h=300&fit=crop&q=80' },
+            { id: 3, name: 'Native Pig - Lechon (41-45kg)', category: 'pork', quantity: 'Minimum 250 units', price: 260, image: 'https://images.unsplash.com/photo-1585521199219-c595dc870360?w=400&h=300&fit=crop&q=80' },
+            { id: 4, name: 'Native Pig - Lechon (36-40kg)', category: 'pork', quantity: 'Minimum 250 units', price: 280, image: 'https://images.unsplash.com/photo-1585521199219-c595dc870360?w=400&h=300&fit=crop&q=80' },
+            { id: 5, name: 'Native Pig - Lechon (31-35kg)', category: 'pork', quantity: 'Minimum 250 units', price: 300, image: 'https://images.unsplash.com/photo-1585521199219-c595dc870360?w=400&h=300&fit=crop&q=80' },
+            { id: 6, name: 'Native Pig - Lechon (26-30kg)', category: 'pork', quantity: 'Minimum 150 units', price: 320, image: 'https://images.unsplash.com/photo-1585521199219-c595dc870360?w=400&h=300&fit=crop&q=80' },
+            { id: 7, name: 'Native Eggs', category: 'eggs', quantity: '1 tray/week', price: 450, image: 'https://images.unsplash.com/photo-1582722872405-8ce16d06c12b?w=400&h=300&fit=crop&q=80' },
+
+            // Crops & Flowers
+            { id: 8, name: 'Banana Puso', category: 'crops', quantity: '10 pcs', price: 60, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 9, name: 'Blue Ternate', category: 'crops', quantity: '25g', price: 95, image: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400&h=300&fit=crop&q=80' },
+            { id: 10, name: 'Bougainvillea', category: 'crops', quantity: '25g', price: 85, image: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400&h=300&fit=crop&q=80' },
+            { id: 11, name: 'Hibiscus', category: 'crops', quantity: '50g', price: 130, image: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400&h=300&fit=crop&q=80' },
+            { id: 12, name: 'Insulin Plant Flower', category: 'crops', quantity: '10g', price: 60, image: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400&h=300&fit=crop&q=80' },
+            { id: 13, name: 'Marigold Orange', category: 'crops', quantity: '50g', price: 150, image: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400&h=300&fit=crop&q=80' },
+            { id: 14, name: 'Rose Red Local', category: 'crops', quantity: '50g', price: 220, image: 'https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=400&h=300&fit=crop&q=80' },
+            { id: 15, name: 'Roselle (Seasonal)', category: 'crops', quantity: '100g', price: 55, image: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400&h=300&fit=crop&q=80' },
+
+            // Herbs
+            { id: 16, name: 'Basil Holy', category: 'herbs', quantity: '25g', price: 40, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 17, name: 'Basil Lemon', category: 'herbs', quantity: '25g', price: 45, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 18, name: 'Basil Sweet', category: 'herbs', quantity: '25g', price: 35, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 19, name: 'Basil Thai', category: 'herbs', quantity: '25g', price: 40, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 20, name: 'Chives (25g)', category: 'herbs', quantity: '25g', price: 25, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 21, name: 'Chives (50g)', category: 'herbs', quantity: '50g', price: 50, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 22, name: 'Cilantro Mexican', category: 'herbs', quantity: '200g', price: 150, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 23, name: 'Cilantro/Coriander', category: 'herbs', quantity: '100g', price: 85, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 24, name: 'Dill', category: 'herbs', quantity: '10g', price: 25, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 25, name: 'Dill Local', category: 'herbs', quantity: '10g', price: 30, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 26, name: 'Goto Kula', category: 'herbs', quantity: '10g', price: 35, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 27, name: 'Guava Fresh Leaves', category: 'herbs', quantity: '200g', price: 160, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 28, name: 'Indian Curry', category: 'herbs', quantity: '25g', price: 50, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 29, name: 'Lavender', category: 'herbs', quantity: '50g', price: 220, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 30, name: 'Mint Choco', category: 'herbs', quantity: '25g', price: 40, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 31, name: 'Mint Eucalyptus', category: 'herbs', quantity: '25g', price: 40, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 32, name: 'Mint Pepper', category: 'herbs', quantity: '25g', price: 40, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 33, name: 'Oregano Kalabo', category: 'herbs', quantity: '50g', price: 35, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 34, name: 'Oregano Italian (25g)', category: 'herbs', quantity: '25g', price: 60, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 35, name: 'Oregano Italian (50g)', category: 'herbs', quantity: '50g', price: 115, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 36, name: 'Pandan', category: 'herbs', quantity: '100g', price: 35, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 37, name: 'Parsley Curl', category: 'herbs', quantity: '50g', price: 45, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 38, name: 'Parsley Italian', category: 'herbs', quantity: '50g', price: 55, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 39, name: 'Pasyotes (100g)', category: 'herbs', quantity: '100g', price: 25, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 40, name: 'Pasyotes (500g)', category: 'herbs', quantity: '500g', price: 100, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 41, name: 'Root Beer', category: 'herbs', quantity: '50g', price: 85, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 42, name: 'Rosemary', category: 'herbs', quantity: '100g', price: 125, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 43, name: 'Serpentina', category: 'herbs', quantity: '10g', price: 40, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 44, name: 'Sibuyas Dahonan', category: 'herbs', quantity: '100g', price: 25, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 45, name: 'Spring Onion (25g)', category: 'herbs', quantity: '25g', price: 20, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 46, name: 'Spring Onion (50g)', category: 'herbs', quantity: '50g', price: 35, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 47, name: 'Tarragon', category: 'herbs', quantity: '25g', price: 160, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+            { id: 48, name: 'Thyme', category: 'herbs', quantity: '25g', price: 170, image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&q=80' },
+
+            // Fruits
+            { id: 49, name: 'Banana Kardava', category: 'fruits', quantity: '25kg/week', price: 60, image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=300&fit=crop&q=80' },
+            { id: 50, name: 'Banana Mondo', category: 'fruits', quantity: 'per kg', price: 180, image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=300&fit=crop&q=80' },
+            { id: 51, name: 'Banana Morado', category: 'fruits', quantity: 'per kg', price: 180, image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=300&fit=crop&q=80' },
+            { id: 52, name: 'Banana Sab-a', category: 'fruits', quantity: 'per kg', price: 125, image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=300&fit=crop&q=80' },
+            { id: 53, name: 'Banana Senyorita', category: 'fruits', quantity: 'per kg', price: 200, image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=300&fit=crop&q=80' },
+            { id: 54, name: 'Banana Tindok', category: 'fruits', quantity: 'per kg', price: 180, image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=300&fit=crop&q=80' },
+            { id: 55, name: 'Banana Tondan', category: 'fruits', quantity: 'per kg', price: 120, image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=300&fit=crop&q=80' },
+            { id: 56, name: 'Biasong', category: 'fruits', quantity: 'per kg', price: 650, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 57, name: 'Bisaya Bayabas (aromatic)', category: 'fruits', quantity: 'per kg', price: 320, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 58, name: 'Doldol (Seasonal)', category: 'fruits', quantity: '1kg/week', price: 450, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 59, name: 'Dragon Fruit (Seasonal)', category: 'fruits', quantity: 'per kg', price: 280, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 60, name: 'Guapple', category: 'fruits', quantity: '3kg/week', price: 320, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 61, name: 'Inyam (Seasonal)', category: 'fruits', quantity: 'per kg', price: 420, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 62, name: 'Lemon Lime', category: 'fruits', quantity: 'per kg', price: 330, image: 'https://images.unsplash.com/photo-1490885578519-c21cc028cb29?w=400&h=300&fit=crop&q=80' },
+            { id: 63, name: 'Lemon Meyer', category: 'fruits', quantity: 'per kg', price: 420, image: 'https://images.unsplash.com/photo-1490885578519-c21cc028cb29?w=400&h=300&fit=crop&q=80' },
+            { id: 64, name: 'Lemonsito', category: 'fruits', quantity: 'per kg', price: 220, image: 'https://images.unsplash.com/photo-1490885578519-c21cc028cb29?w=400&h=300&fit=crop&q=80' },
+            { id: 65, name: 'Lomboy (Seasonal)', category: 'fruits', quantity: '5kg/week', price: 220, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 66, name: 'Mansanitas', category: 'fruits', quantity: '100g', price: 120, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 67, name: 'Miracle Fruit', category: 'fruits', quantity: 'per piece', price: 35, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 68, name: 'Mulberries', category: 'fruits', quantity: '100g', price: 85, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 69, name: 'Papaya Red Lady', category: 'fruits', quantity: 'per kg', price: 70, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 70, name: 'Passion Fruit', category: 'fruits', quantity: 'per kg', price: 170, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 71, name: 'Sambag / Tamarind', category: 'fruits', quantity: 'per kg', price: 280, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 72, name: 'Sugarcane / Tubó Tapol (Fresh)', category: 'fruits', quantity: 'per kg', price: 110, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 73, name: 'Tagpo', category: 'fruits', quantity: '100g', price: 120, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 74, name: 'Tambis (Seasonal)', category: 'fruits', quantity: 'per kg', price: 220, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+
+            // Spices
+            { id: 75, name: 'Achuete / Annatto (Dried)', category: 'spices', quantity: '100g', price: 130, image: 'https://images.unsplash.com/photo-1596040696328-e57d7c01ce1d?w=400&h=300&fit=crop&q=80' },
+            { id: 76, name: 'Cinnamon Air-Dried Leaves (Cebu)', category: 'spices', quantity: '5g', price: 130, image: 'https://images.unsplash.com/photo-1596040696328-e57d7c01ce1d?w=400&h=300&fit=crop&q=80' },
+            { id: 77, name: 'Cinnamon Air-Dried Leaves (Mindanao)', category: 'spices', quantity: '10g', price: 85, image: 'https://images.unsplash.com/photo-1596040696328-e57d7c01ce1d?w=400&h=300&fit=crop&q=80' },
+            { id: 78, name: 'Cinnamon Fresh Leaves (Cebu)', category: 'spices', quantity: '5g', price: 110, image: 'https://images.unsplash.com/photo-1596040696328-e57d7c01ce1d?w=400&h=300&fit=crop&q=80' },
+            { id: 79, name: 'Cinnamon Fresh Leaves (Mindanao)', category: 'spices', quantity: '10g', price: 70, image: 'https://images.unsplash.com/photo-1596040696328-e57d7c01ce1d?w=400&h=300&fit=crop&q=80' },
+            { id: 80, name: 'Ginger / Luy-a', category: 'spices', quantity: '100g', price: 45, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 81, name: 'Ginger / Luy-a Bisaya', category: 'spices', quantity: '100g', price: 55, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 82, name: 'Ginger / Luy-a Dulaw', category: 'spices', quantity: '100g', price: 45, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 83, name: 'Kamias / Iba (Seasonal)', category: 'spices', quantity: '200g/week', price: 35, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 84, name: 'Karamay / Chinese Iba', category: 'spices', quantity: '200g/week', price: 65, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 85, name: 'Katmon (Seasonal)', category: 'spices', quantity: '2kg/week', price: 450, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 86, name: 'Lemongrass', category: 'spices', quantity: '100g', price: 35, image: 'https://images.unsplash.com/photo-1596040696328-e57d7c01ce1d?w=400&h=300&fit=crop&q=80' },
+            { id: 87, name: 'Sili Atsal/Bell Pepper', category: 'spices', quantity: '100g', price: 30, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 88, name: 'Sili Espada', category: 'spices', quantity: '100g', price: 60, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 89, name: 'Sili Kulikot', category: 'spices', quantity: '100g', price: 110, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 90, name: 'Sili Puti', category: 'spices', quantity: '100g', price: 130, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 91, name: 'Turmeric', category: 'spices', quantity: '100g', price: 45, image: 'https://images.unsplash.com/photo-1596040696328-e57d7c01ce1d?w=400&h=300&fit=crop&q=80' },
+            { id: 92, name: 'Wachichao', category: 'spices', quantity: '10g', price: 40, image: 'https://images.unsplash.com/photo-1596040696328-e57d7c01ce1d?w=400&h=300&fit=crop&q=80' },
+
+            // Vegetables
+            { id: 93, name: 'Alugbati / Spinach', category: 'vegetables', quantity: '200g', price: 25, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 94, name: 'Bantiyong / Ash Gourd', category: 'vegetables', quantity: 'per kg', price: 120, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 95, name: 'Carrots (200g)', category: 'vegetables', quantity: '200g', price: 35, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 96, name: 'Carrots (1kg)', category: 'vegetables', quantity: '1 kg', price: 160, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 97, name: 'Cassava', category: 'vegetables', quantity: '1 kg', price: 90, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 98, name: 'Corn (Mais Tinigib Heirloom)', category: 'vegetables', quantity: '1 kg', price: 180, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 99, name: 'Eggplant (200g)', category: 'vegetables', quantity: '200g', price: 50, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 100, name: 'Eggplant (1kg)', category: 'vegetables', quantity: '1 kg', price: 220, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 101, name: 'Himbabao / Alukon', category: 'vegetables', quantity: '100g', price: 75, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 102, name: 'Kamunggay / Moringa', category: 'vegetables', quantity: '200g', price: 45, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 103, name: 'Kamunggay / Moringa (de-stemmed)', category: 'vegetables', quantity: '200g', price: 50, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 104, name: 'Okra (200g)', category: 'vegetables', quantity: '200g', price: 70, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 105, name: 'Okra (1kg)', category: 'vegetables', quantity: '1 kg', price: 170, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 106, name: 'Kulo / Breadfruit (Seasonal)', category: 'vegetables', quantity: 'per kg', price: 140, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 107, name: 'Radish (200g)', category: 'vegetables', quantity: '200g', price: 60, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 108, name: 'Radish (1kg)', category: 'vegetables', quantity: '1 kg', price: 220, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 109, name: 'Sikwa', category: 'vegetables', quantity: '500g', price: 65, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 110, name: 'Gourd Spiny/Kantola', category: 'vegetables', quantity: '200g', price: 85, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 111, name: 'String Beans (250g)', category: 'vegetables', quantity: '250g', price: 40, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 112, name: 'String Beans (1kg)', category: 'vegetables', quantity: '1 kg', price: 130, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 113, name: 'Tomatoes (500g)', category: 'vegetables', quantity: '500g', price: 80, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 114, name: 'Tomatoes (1kg)', category: 'vegetables', quantity: '1 kg', price: 150, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 115, name: 'Tomatoes Cherry', category: 'vegetables', quantity: '1 kg', price: 650, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 116, name: 'Ube', category: 'vegetables', quantity: '1 kg', price: 200, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+
+            // Wild Products
+            { id: 117, name: 'Taklong / Tree Snail Escargot', category: 'wild', quantity: '1 kg', price: 450, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 118, name: 'Wild Cucumber / Pepinito', category: 'wild', quantity: '100g', price: 60, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 119, name: 'Wild Passion Fruit / Sto Papa', category: 'wild', quantity: '100g', price: 110, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+
+            // Fresh Drinks
+            { id: 120, name: 'Coconut Buko', category: 'drinks', quantity: 'per piece', price: 95, image: 'https://images.unsplash.com/photo-1609954637149-052416b78e9d?w=400&h=300&fit=crop&q=80' },
+            { id: 121, name: 'Coconut Buko (50pcs+)', category: 'drinks', quantity: 'per piece', price: 55, image: 'https://images.unsplash.com/photo-1609954637149-052416b78e9d?w=400&h=300&fit=crop&q=80' },
+            { id: 122, name: 'Tubâ (0-12hrs)', category: 'drinks', quantity: 'per gal', price: 380, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 123, name: 'Tubâ (12-24hrs)', category: 'drinks', quantity: 'per gal', price: 450, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 124, name: 'Tubâ with Tungog (0-12hrs)', category: 'drinks', quantity: 'per gal', price: 450, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' },
+            { id: 125, name: 'Tubâ with Tungog (12-24hrs)', category: 'drinks', quantity: 'per gal', price: 520, image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?w=400&h=300&fit=crop&q=80' }
+        ];
+
+        let cart = [];
+        let currentFilter = 'all';
+        let searchQuery = '';
+
+        // Category Emojis
+        const categoryEmojis = {
+            pork: '🐷',
+            eggs: '🥚',
+            crops: '🌸',
+            herbs: '🌿',
+            fruits: '🍎',
+            spices: '🧂',
+            vegetables: '🥕',
+            wild: '🌾',
+            drinks: '🥤'
+        };
+
+        // Initialize
+        function init() {
+            displayProducts('all');
+            
+            // Add search functionality
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    searchQuery = e.target.value;
+                    displayProducts(currentFilter);
+                });
+            }
+        }
+
+        // Display Products
+        function displayProducts(category) {
+            const container = document.getElementById('productsContainer');
+            let filtered = category === 'all' ? products : products.filter(p => p.category === category);
+            
+            // Apply search filter
+            if (searchQuery.trim()) {
+                filtered = filtered.filter(p => 
+                    p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    p.category.toLowerCase().includes(searchQuery.toLowerCase())
+                );
+            }
+
+            if (filtered.length === 0) {
+                container.innerHTML = '<div class="empty-message">No products found</div>';
+                return;
+            }
+
+            container.innerHTML = filtered.map(product => `
+                <div class="product-card">
+                    <div class="product-image">${categoryEmojis[product.category] || '📦'}</div>
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-quantity">${product.quantity}</div>
+                        <div class="product-price-section">
+                            <div class="product-price">₱${product.price.toFixed(2)}</div>
+                            <div style="font-size: 11px; color: #888;">per unit</div>
+                        </div>
+                        <div class="product-controls">
+                            <input type="number" class="quantity-input" id="qty-${product.id}" value="1" min="1">
+                            <button class="add-btn" onclick="addToCart(${product.id})">Add</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter Products
+        function filterProducts(category) {
+            currentFilter = category;
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            displayProducts(category);
+        }
+
+        // Add to Cart
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const quantity = parseInt(document.getElementById(`qty-${productId}`).value);
+
+            if (quantity <= 0) {
+                alert('Please enter a valid quantity');
+                return;
+            }
+
+            const existingItem = cart.find(item => item.id === productId);
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({
+                    ...product,
+                    quantity: quantity
+                });
+            }
+
+            updateCartCount();
+        }
+
+        // Update Cart Count
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cartCount').textContent = count;
+        }
+
+        // Open Cart
+        function openCart() {
+            document.getElementById('cartModal').style.display = 'block';
+            displayCart();
+        }
+
+        // Close Cart
+        function closeCart() {
+            document.getElementById('cartModal').style.display = 'none';
+        }
+
+        // Display Cart Items
+        function displayCart() {
+            const container = document.getElementById('cartItemsContainer');
+
+            if (cart.length === 0) {
+                container.innerHTML = '<p class="empty-message">Your cart is empty</p>';
+                document.getElementById('checkoutBtn').disabled = true;
+                document.getElementById('subtotal').textContent = '0.00';
+                document.getElementById('total').textContent = '0.00';
+                return;
+            }
+
+            document.getElementById('checkoutBtn').disabled = false;
+
+            container.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <div class="cart-item-details">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-price">₱${item.price.toFixed(2)} each</div>
+                    </div>
+                    <div class="cart-item-qty">
+                        <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">−</button>
+                        <span style="min-width: 20px; text-align: center;">${item.quantity}</span>
+                        <button class="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                    </div>
+                    <div class="cart-item-total">₱${(item.price * item.quantity).toFixed(2)}</div>
+                    <button class="remove-btn" onclick="removeFromCart(${item.id})">Remove</button>
+                </div>
+            `).join('');
+
+            updateCartTotals();
+        }
+
+        // Update Quantity
+        function updateQuantity(productId, change) {
+            const item = cart.find(i => i.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    displayCart();
+                    updateCartCount();
+                }
+            }
+        }
+
+        // Remove from Cart
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            displayCart();
+            updateCartCount();
+        }
+
+        // Update Cart Totals
+        function updateCartTotals() {
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            document.getElementById('subtotal').textContent = total.toFixed(2);
+            document.getElementById('total').textContent = total.toFixed(2);
+        }
+
+        // Proceed to Checkout
+        function proceedToCheckout() {
+            // Minimum order requirements for pork products
+            const porkMinimums = {
+                'Native Pig - Lapa (All Orders)': 150,
+                'Native Pig - Lechon (50kg+)': 250,
+                'Native Pig - Lechon (41-45kg)': 250,
+                'Native Pig - Lechon (36-40kg)': 250,
+                'Native Pig - Lechon (31-35kg)': 250,
+                'Native Pig - Lechon (26-30kg)': 150
+            };
+
+            // Check if pork products meet minimum order
+            const porkItems = cart.filter(item => 
+                Object.keys(porkMinimums).includes(item.name)
+            );
+
+            if (porkItems.length > 0) {
+                for (let porkItem of porkItems) {
+                    const minimum = porkMinimums[porkItem.name];
+                    if (porkItem.quantity < minimum) {
+                        showMinimumOrderAlert(porkItem.name, minimum, porkItem.quantity);
+                        return;
+                    }
+                }
+            }
+
+            document.getElementById('cartView').style.display = 'none';
+            document.getElementById('orderForm').style.display = 'block';
+        }
+
+        // Back to Cart
+        function backToCart() {
+            document.getElementById('orderForm').style.display = 'none';
+            document.getElementById('cartView').style.display = 'block';
+        }
+
+        // Submit Order
+        function submitOrder(event) {
+            event.preventDefault();
+
+            // Minimum order requirements for pork products
+            const porkMinimums = {
+                'Native Pig - Lapa (All Orders)': 150,
+                'Native Pig - Lechon (50kg+)': 250,
+                'Native Pig - Lechon (41-45kg)': 250,
+                'Native Pig - Lechon (36-40kg)': 250,
+                'Native Pig - Lechon (31-35kg)': 250,
+                'Native Pig - Lechon (26-30kg)': 150
+            };
+
+            // Check if pork products meet minimum order
+            const porkItems = cart.filter(item => 
+                Object.keys(porkMinimums).includes(item.name)
+            );
+
+            if (porkItems.length > 0) {
+                for (let porkItem of porkItems) {
+                    const minimum = porkMinimums[porkItem.name];
+                    if (porkItem.quantity < minimum) {
+                        showMinimumOrderAlert(porkItem.name, minimum, porkItem.quantity);
+                        return;
+                    }
+                }
+            }
+
+            const customerName = document.getElementById('customerName').value;
+            const customerPhone = document.getElementById('customerPhone').value;
+            const customerEmail = document.getElementById('customerEmail').value;
+            const customerAddress = document.getElementById('customerAddress').value;
+            const customerNotes = document.getElementById('customerNotes').value;
+
+            // Format cart items for email
+            const cartItems = cart.map(item => 
+                `${item.name} (Qty: ${item.quantity}) - ₱${(item.price * item.quantity).toFixed(2)}`
+            ).join('\n');
+
+            const orderTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+            const orderData = {
+                customer: {
+                    name: customerName,
+                    phone: customerPhone,
+                    email: customerEmail,
+                    address: customerAddress,
+                    notes: customerNotes
+                },
+                items: cart,
+                total: orderTotal,
+                timestamp: new Date().toISOString()
+            };
+
+            // Prepare FormData for Formspree
+            const formData = new FormData();
+            formData.append('name', customerName);
+            formData.append('phone', customerPhone);
+            formData.append('email', customerEmail);
+            formData.append('address', customerAddress);
+            formData.append('special_instructions', customerNotes);
+            formData.append('items', cartItems);
+            formData.append('total', `₱${orderTotal.toFixed(2)}`);
+            formData.append('timestamp', orderData.timestamp);
+
+            // Send to Formspree
+            fetch('https://formspree.io/f/mqeollng', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Save to localStorage as backup
+                    let orders = JSON.parse(localStorage.getItem('oikosOrders') || '[]');
+                    orders.push(orderData);
+                    localStorage.setItem('oikosOrders', JSON.stringify(orders));
+
+                    // Log order data
+                    console.log('Order Submitted Successfully:', orderData);
+
+                    // Show success message
+                    document.getElementById('orderForm').style.display = 'none';
+                    document.getElementById('successMessage').style.display = 'block';
+
+                    // Clear cart and form
+                    cart = [];
+                    updateCartCount();
+                    document.querySelector('form').reset();
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            })
+            .catch(error => {
+                console.error('Error submitting order:', error);
+                // Still save locally even if Formspree fails
+                let orders = JSON.parse(localStorage.getItem('oikosOrders') || '[]');
+                orders.push(orderData);
+                localStorage.setItem('oikosOrders', JSON.stringify(orders));
+
+                // Show success message anyway (local save worked)
+                document.getElementById('orderForm').style.display = 'none';
+                document.getElementById('successMessage').style.display = 'block';
+                cart = [];
+                updateCartCount();
+                document.querySelector('form').reset();
+
+                alert('Order saved locally. Formspree sync may have encountered an issue.');
+            });
+        }
+
+        // Show Minimum Order Alert
+        function showMinimumOrderAlert(productName, minimumRequired, currentQuantity) {
+            document.getElementById('alertProductName').textContent = productName;
+            document.getElementById('alertMinimum').textContent = minimumRequired + ' units';
+            document.getElementById('alertHave').textContent = currentQuantity + ' units';
+            document.getElementById('minimumOrderAlert').classList.add('show');
+        }
+
+        // Close Minimum Order Alert
+        function closeMinimumOrderAlert() {
+            document.getElementById('minimumOrderAlert').classList.remove('show');
+        }
+
+        // Reset and Close
+        function resetAndClose() {
+            cart = [];
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('cartView').style.display = 'block';
+            document.getElementById('customerName').value = '';
+            document.getElementById('customerPhone').value = '';
+            document.getElementById('customerEmail').value = '';
+            document.getElementById('customerAddress').value = '';
+            document.getElementById('customerNotes').value = '';
+            updateCartCount();
+            closeCart();
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('cartModal');
+            if (event.target === modal) {
+                closeCart();
+            }
+        }
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
