@@ -3,7 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OikosOF Marketplace - Premium Organic Products & Pork</title>
+    <title>Bulk Buy OikosOF Marketplace - Premium Organic Products, Native Pork & Lechon Wholesale Philippines</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Bulk Buy OikosOF Marketplace - Direct wholesale organic products, native pork, lechon, fresh herbs, vegetables, and spices from Sibonga Cebu. Premium quality farm-to-table bulk purchasing for businesses nationwide.">
+    
+    <meta name="keywords" content="bulk organic products Philippines, wholesale pork Cebu, native lechon Sibonga, fresh herbs bulk, organic vegetables Cebu, farm-to-table wholesale, OikosOF marketplace, organic spices bulk, native pork suppliers Philippines, lechon wholesale, organic farming Cebu, bulk fruit wholesale, herbal products wholesale, sustainable agriculture marketplace, agricultural products supplier Cebu, food wholesale Philippines, organic pork Cebu, fresh organic bulk, sustainable farming marketplace">
+    
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    
+    <meta name="author" content="Oikos Orchard & Farm">
+    <meta name="language" content="English">
+    
+    <!-- Geo-targeting for Local SEO -->
+    <meta name="geo.placename" content="Sibonga, Cebu, Philippines">
+    <meta name="geo.region" content="PH-CEB">
+    <meta name="geo.position" content="10.0194;124.0103">
+    <meta name="ICBM" content="10.0194, 124.0103">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://oikosof.netlify.app/OikosMarketplace.html">
+    <link rel="sitemap" type="application/xml" href="https://oikosof.netlify.app/sitemap.xml">
+    
+    <!-- Open Graph (Facebook / Social Media) -->
+    <meta property="og:title" content="Bulk Buy OikosOF - Premium Organic Wholesale Marketplace Philippines">
+    <meta property="og:description" content="Direct wholesale organic products and native pork from OikosOF Farm. Buy bulk fresh herbs, vegetables, spices, and lechon at farm prices. Nationwide delivery available.">
+    <meta property="og:url" content="https://oikosof.netlify.app/OikosMarketplace.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://oikosof.netlify.app/assets/images/OikosOF.png">
+    <meta property="og:site_name" content="Oikos Orchard & Farm">
+    <meta property="og:locale" content="en_PH">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Bulk Buy OikosOF Marketplace - Organic Products Wholesale">
+    <meta name="twitter:description" content="Premium wholesale organic products and native pork. Direct from OikosOF Farm in Sibonga Cebu. Fast delivery nationwide.">
+    <meta name="twitter:image" content="https://oikosof.netlify.app/assets/images/OikosOF.png">
+    
+    <!-- Google Search Console Verification -->
+    <meta name="google-site-verification" content="ayOIaQ-vlYb3F9QKULVIUJIDj6Ic-XMSsTCMqeq9ES4">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="./assets/images/OikosOF.png">
+    
+    <!-- Performance hints -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://images.unsplash.com">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         * {
             margin: 0;
@@ -37,6 +87,84 @@
             gap: 40px;
         }
 
+        .hamburger-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            background: none;
+            border: none;
+            gap: 6px;
+            padding: 8px;
+        }
+
+        .hamburger-menu span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-menu.active span:nth-child(1) {
+            transform: rotate(45deg) translate(10px, 10px);
+        }
+
+        .hamburger-menu.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-menu.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        .mobile-nav {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #2d5016 0%, #3d6b1f 100%);
+            border-bottom: 3px solid #D2B48C;
+            flex-direction: column;
+            padding: 0;
+            gap: 0;
+            z-index: 99;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .mobile-nav.active {
+            display: flex;
+            max-height: 500px;
+        }
+
+        .mobile-nav-link {
+            display: block;
+            padding: 12px 20px;
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: 500;
+            font-family: 'Book Antiqua', serif;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav-link:hover {
+            background: rgba(255, 255, 255, 0.15);
+            padding-left: 24px;
+        }
+
+        .mobile-nav-link.active {
+            background: rgba(255, 255, 255, 0.2);
+            border-left: 4px solid #D2B48C;
+            padding-left: 16px;
+        }
+
+        .mobile-nav .search-bar {
+            max-width: 100%;
+        }
+
         .logo {
             font-size: 26px;
             font-weight: 700;
@@ -47,6 +175,7 @@
             align-items: center;
             gap: 12px;
             white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .logo-img {
@@ -729,33 +858,52 @@
         }
 
         @media (max-width: 768px) {
-            .minimum-order-content {
-                max-width: 90vw;
-            }
-
-            .minimum-order-header h2 {
-                font-size: 18px;
-            }
-
-            .minimum-order-body {
-                padding: 20px 16px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-                gap: 12px;
+            header {
+                padding: 12px 0;
             }
 
             .header-content {
-                flex-direction: column;
+                flex-wrap: wrap;
                 gap: 12px;
-                padding: 0 16px;
+                padding: 0 12px;
+                justify-content: space-between;
+            }
+
+            .hamburger-menu {
+                display: flex;
+                order: 3;
+            }
+
+            .logo {
+                font-size: 18px;
+                order: 1;
             }
 
             .search-bar {
-                max-width: 100%;
+                order: 2;
+                max-width: calc(100% - 50px);
+                flex: 0 1 auto;
+            }
+
+            .cart-icon {
+                order: 4;
+                padding: 6px 12px;
+                font-size: 12px;
+                white-space: nowrap;
+            }
+
+            .logo-img {
+                height: 32px;
+                width: 32px;
+            }
+
+            .logo-text {
+                font-size: 14px;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 12px;
             }
 
             .filter-buttons {
@@ -763,10 +911,12 @@
                 overflow-x: auto;
                 padding-bottom: 8px;
             }
-
+            
             .filter-btn {
                 white-space: nowrap;
                 flex-shrink: 0;
+                padding: 8px 14px;
+                font-size: 12px;
             }
 
             .form-row {
@@ -782,8 +932,267 @@
             .container {
                 padding: 16px;
             }
+
+            .filters {
+                padding: 16px;
+                margin-bottom: 16px;
+            }
+
+            .section-header {
+                font-size: 16px;
+                margin-bottom: 12px;
+            }
+
+            .minimum-order-content {
+                max-width: 90vw;
+            }
+
+            .minimum-order-header h2 {
+                font-size: 18px;
+            }
+
+            .minimum-order-body {
+                padding: 20px 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 10px;
+            }
+
+            .product-card {
+                border-radius: 4px;
+            }
+
+            .product-image {
+                height: 150px;
+                font-size: 36px;
+            }
+
+            .product-info {
+                padding: 10px;
+            }
+
+            .product-name {
+                font-size: 12px;
+                min-height: 28px;
+            }
+
+            .product-quantity {
+                font-size: 11px;
+            }
+
+            .product-price {
+                font-size: 16px;
+            }
+
+            .product-controls {
+                gap: 4px;
+            }
+
+            .quantity-input {
+                width: 45px;
+                padding: 5px 4px;
+                font-size: 11px;
+            }
+
+            .add-btn {
+                padding: 6px;
+                font-size: 11px;
+            }
+
+            .modal-content {
+                width: 100%;
+                margin: 0;
+                border-radius: 0;
+                max-height: 100vh;
+            }
+
+            .modal-header {
+                padding: 16px;
+            }
+
+            .modal-header h2 {
+                font-size: 16px;
+            }
+
+            .close-btn {
+                width: 28px;
+                height: 28px;
+            }
+
+            .cart-item {
+                padding: 12px 0;
+                gap: 8px;
+            }
+
+            .cart-item-name {
+                font-size: 12px;
+            }
+
+            .filter-btn {
+                padding: 7px 12px;
+                font-size: 11px;
+            }
+
+            .logo {
+                font-size: 16px;
+            }
+
+            .logo-img {
+                height: 28px;
+                width: 28px;
+            }
+
+            .logo-text {
+                font-size: 12px;
+            }
+
+            .search-bar {
+                padding: 0 8px;
+            }
+
+            .search-bar input {
+                padding: 8px 6px;
+                font-size: 12px;
+            }
         }
     </style>
+    
+    <!-- JSON-LD Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Oikos Orchard & Farm - Bulk Buy Marketplace",
+      "image": "https://oikosof.netlify.app/assets/images/OikosOF.png",
+      "description": "Premium wholesale marketplace for organic products, native pork, lechon, fresh herbs, vegetables, and spices. Direct from sustainable farm in Sibonga Cebu to businesses nationwide.",
+      "url": "https://oikosof.netlify.app/OikosMarketplace.html",
+      "telephone": "+63 917 777 0851",
+      "email": "Oikosorchardandfarm@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Vegetable Highway, Upper Bae",
+        "addressLocality": "Sibonga",
+        "addressRegion": "Cebu",
+        "postalCode": "6020",
+        "addressCountry": "PH"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "10.0194",
+        "longitude": "124.0103"
+      },
+      "priceRange": "₱",
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Cebu"
+        },
+        {
+          "@type": "Region",
+          "name": "Visayas"
+        },
+        {
+          "@type": "Country",
+          "name": "Philippines"
+        }
+      ],
+      "sameAs": [
+        "https://www.facebook.com/profile.php?id=100083203516620",
+        "https://www.instagram.com/oiko.sorchardandfarm/",
+        "https://www.linkedin.com/in/oikosorchard-andfarm-680b713aa/"
+      ],
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "opens": "08:00",
+        "closes": "18:00"
+      },
+      "serviceType": ["Wholesale", "Bulk Sales", "Organic Products", "Farm Products"]
+    }
+    </script>
+    
+    <!-- JSON-LD Breadcrumb Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://oikosof.netlify.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Marketplace",
+          "item": "https://oikosof.netlify.app/OikosMarketplace.html"
+        }
+      ]
+    }
+    </script>
+    
+    <!-- JSON-LD Organization Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Oikos Orchard & Farm",
+      "url": "https://oikosof.netlify.app",
+      "logo": "https://oikosof.netlify.app/assets/images/OikosOF.png",
+      "description": "Regenerative agricultural enterprise and agri-eco-tourism destination offering premium organic products, glamping, farm experiences, and wholesale marketplace.",
+      "foundingDate": "2020",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "Customer Service",
+        "telephone": "+63 917 777 0851",
+        "email": "Oikosorchardandfarm@gmail.com",
+        "availableLanguage": ["en"]
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Vegetable Highway, Upper Bae",
+        "addressLocality": "Sibonga",
+        "addressRegion": "Cebu",
+        "postalCode": "6020",
+        "addressCountry": "PH"
+      },
+      "sameAs": [
+        "https://www.facebook.com/profile.php?id=100083203516620",
+        "https://www.instagram.com/oiko.sorchardandfarm/",
+        "https://www.linkedin.com/in/oikosorchard-andfarm-680b713aa/"
+      ],
+      "knowsAbout": ["Organic Farming", "Sustainable Agriculture", "Agri-tourism", "Farm Products", "Regenerative Agriculture"],
+      "areaServed": "PH"
+    }
+    </script>
+    
+    <!-- JSON-LD Marketplace Product Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Bulk Buy OikosOF Marketplace",
+      "url": "https://oikosof.netlify.app/OikosMarketplace.html",
+      "applicationCategory": "ECommerceApplication",
+      "description": "Wholesale marketplace for organic products and native pork from sustainable farms",
+      "offers": [
+        {
+          "@type": "AggregateOffer",
+          "priceCurrency": "PHP",
+          "lowPrice": "20",
+          "highPrice": "650",
+          "offerCount": "125",
+          "category": "Organic Products"
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
     <!-- Header -->
@@ -791,7 +1200,7 @@
         <div class="header-content">
             <div class="logo">
                 <img src="assets/images/OikosOF.png" alt="OikosOF Logo" class="logo-img">
-                <span class="logo-text">OikosOF Marketplace</span>
+                <span class="logo-text">Bulk Buy OikosOF</span>
             </div>
             <div class="search-bar">
                 <input type="text" id="searchInput" placeholder="Search products...">
@@ -800,24 +1209,41 @@
                 <span>🛒 Cart</span>
                 <span class="cart-count" id="cartCount">0</span>
             </div>
+            <button class="hamburger-menu" id="hamburgerBtn" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
+        <!-- Mobile Navigation Menu -->
+        <nav class="mobile-nav" id="mobileNav">
+            <a href="./index.html" class="mobile-nav-link">🏠 Home</a>
+            <a href="./index.html#services" class="mobile-nav-link">🎯 Services</a>
+            <a href="./Events.html" class="mobile-nav-link">📅 Events</a>
+            <a href="./FAQs.html" class="mobile-nav-link">❓ FAQs</a>
+            <a href="./Partnership.html" class="mobile-nav-link">🤝 Partnership</a>
+            <a href="./OikosMarketplace.html" class="mobile-nav-link active">🛒 Marketplace</a>
+        </nav>
     </header>
 
     <!-- Main Content -->
-    <div class="container">
+    <div class="container" style="position: relative;">
+        <h1 style="font-size: 28px; color: #2d5016; margin-bottom: 10px; text-align: center; font-family: 'Book Antiqua', serif;">Bulk Buy OikosOF Marketplace</h1>
+        <p style="text-align: center; color: #666; margin-bottom: 30px; font-size: 16px; line-height: 1.6;">Premium wholesale organic products and native pork directly from our sustainable farm in Sibonga, Cebu. Quality farm-to-table products for your business and organization needs.</p>
+        
         <!-- Filters -->
         <div class="filters">
-            <div class="section-header">Categories</div>
+            <div class="section-header">Shop by Category</div>
             <div class="filter-buttons">
-                <button class="filter-btn active" onclick="filterProducts('all')">All Products</button>
-                <button class="filter-btn" onclick="filterProducts('pork')">Pork & Lechon</button>
-                <button class="filter-btn" onclick="filterProducts('crops')">Flowers & Crops</button>
-                <button class="filter-btn" onclick="filterProducts('herbs')">Herbs</button>
-                <button class="filter-btn" onclick="filterProducts('fruits')">Fruits</button>
-                <button class="filter-btn" onclick="filterProducts('spices')">Spices</button>
-                <button class="filter-btn" onclick="filterProducts('vegetables')">Vegetables</button>
-                <button class="filter-btn" onclick="filterProducts('wild')">Wild Products</button>
-                <button class="filter-btn" onclick="filterProducts('drinks')">Fresh Drinks</button>
+                <button class="filter-btn active" onclick="filterProducts('all')" title="View all organic and farm products">All Products</button>
+                <button class="filter-btn" onclick="filterProducts('pork')" title="Native pork and lechon wholesale">Pork & Lechon</button>
+                <button class="filter-btn" onclick="filterProducts('crops')" title="Edible flowers and crops">Flowers & Crops</button>
+                <button class="filter-btn" onclick="filterProducts('herbs')" title="Fresh culinary and medicinal herbs">Herbs</button>
+                <button class="filter-btn" onclick="filterProducts('fruits')" title="Organic tropical fruits">Fruits</button>
+                <button class="filter-btn" onclick="filterProducts('spices')" title="Pure organic spices and seasonings">Spices</button>
+                <button class="filter-btn" onclick="filterProducts('vegetables')" title="Fresh organic vegetables">Vegetables</button>
+                <button class="filter-btn" onclick="filterProducts('wild')" title="Wild and foraged products">Wild Products</button>
+                <button class="filter-btn" onclick="filterProducts('drinks')" title="Fresh organic beverages">Fresh Drinks</button>
             </div>
         </div>
 
@@ -1122,18 +1548,21 @@
             }
 
             container.innerHTML = filtered.map(product => `
-                <div class="product-card">
-                    <div class="product-image">${categoryEmojis[product.category] || '📦'}</div>
+                <div class="product-card" itemscope itemtype="https://schema.org/Product">
+                    <meta itemprop="name" content="${product.name}">
+                    <meta itemprop="price" content="${product.price}">
+                    <meta itemprop="priceCurrency" content="PHP">
+                    <div class="product-image" title="${product.name} - ${product.quantity}" aria-label="${product.name}">${categoryEmojis[product.category] || '📦'}</div>
                     <div class="product-info">
-                        <div class="product-name">${product.name}</div>
-                        <div class="product-quantity">${product.quantity}</div>
+                        <h3 class="product-name" itemprop="name">${product.name}</h3>
+                        <div class="product-quantity" itemprop="description">${product.quantity}</div>
                         <div class="product-price-section">
-                            <div class="product-price">₱${product.price.toFixed(2)}</div>
+                            <div class="product-price" itemprop="price">₱${product.price.toFixed(2)}</div>
                             <div style="font-size: 11px; color: #888;">per unit</div>
                         </div>
                         <div class="product-controls">
-                            <input type="number" class="quantity-input" id="qty-${product.id}" value="1" min="1">
-                            <button class="add-btn" onclick="addToCart(${product.id})">Add</button>
+                            <input type="number" class="quantity-input" id="qty-${product.id}" value="1" min="1" aria-label="Quantity of ${product.name}">
+                            <button class="add-btn" onclick="addToCart(${product.id})" title="Add ${product.name} to cart">Add</button>
                         </div>
                     </div>
                 </div>
@@ -1435,8 +1864,195 @@
             }
         }
 
+        // Toggle Mobile Menu
+        function toggleMobileMenu() {
+            const hamburger = document.getElementById('hamburgerBtn');
+            const mobileNav = document.getElementById('mobileNav');
+            hamburger.classList.toggle('active');
+            if (mobileNav) {
+                mobileNav.classList.toggle('active');
+            }
+        }
+
+        // Close mobile menu when item is clicked
+        function closeMobileMenu() {
+            const hamburger = document.getElementById('hamburgerBtn');
+            const mobileNav = document.getElementById('mobileNav');
+            hamburger.classList.remove('active');
+            if (mobileNav) {
+                mobileNav.classList.remove('active');
+            }
+        }
+
+        // Attach event listeners to mobile nav links
+        function attachMobileNavListeners() {
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
+        }
+
         // Initialize on page load
-        window.addEventListener('DOMContentLoaded', init);
+        window.addEventListener('DOMContentLoaded', () => {
+            init();
+            attachMobileNavListeners();
+        });
     </script>
+
+    <!-- Footer -->
+    <footer class="modern-footer" style="margin-top: 60px;">
+        <!-- Footer Top Section -->
+        <div class="footer-top" style="padding-bottom: 50px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+            <div class="container" style="max-width: 1280px; margin: 0 auto; padding: 0 24px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
+                    <!-- Brand Section -->
+                    <div class="footer-brand-section" style="animation: fadeInUp 0.6s ease;">
+                        <div class="footer-brand" style="display: flex; align-items: flex-start; gap: 15px; margin-bottom: 20px;">
+                            <img src="assets/images/OikosOF.png" alt="Oikos Logo" class="footer-logo" style="height: 60px; width: auto; object-fit: contain; filter: brightness(1.1);">
+                            <div>
+                                <h5 style="font-size: 1.3rem; font-weight: 800; margin: 0; color: #fff; letter-spacing: 0.5px;">Bulk Buy OikosOF</h5>
+                                <p style="font-size: 0.85rem; color: #27ae60; margin: 5px 0 0; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">Premium Products</p>
+                            </div>
+                        </div>
+                        <p style="color: #aaa; line-height: 1.7; font-size: 0.9rem; margin: 15px 0;">Bulk purchasing made simple. Direct from farm to your table. Premium quality organic products at wholesale prices for businesses and organizations.</p>
+                    </div>
+
+                    <!-- Products Section -->
+                    <div class="footer-column" style="animation: fadeInUp 0.6s ease; animation-fill-mode: both; animation-delay: 0.1s;">
+                        <h6 style="font-size: 0.95rem; font-weight: 800; color: #fff; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 0.5px; position: relative; padding-bottom: 12px; border-bottom: 2px solid rgba(39, 174, 96, 0.3);"><i class="fas fa-leaf"></i> Products</h6>
+                        <ul style="list-style: none; padding: 0; margin: 0;">
+                            <li style="margin-bottom: 12px;"><a href="#" style="color: #aaa; text-decoration: none; font-size: 0.9rem; transition: color 0.3s ease;">Organic Vegetables</a></li>
+                            <li style="margin-bottom: 12px;"><a href="#" style="color: #aaa; text-decoration: none; font-size: 0.9rem; transition: color 0.3s ease;">Fresh Herbs</a></li>
+                            <li style="margin-bottom: 12px;"><a href="#" style="color: #aaa; text-decoration: none; font-size: 0.9rem; transition: color 0.3s ease;">Native Pork & Lechon</a></li>
+                            <li style="margin-bottom: 12px;"><a href="#" style="color: #aaa; text-decoration: none; font-size: 0.9rem; transition: color 0.3s ease;">Fresh Eggs</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Support Section -->
+                    <div class="footer-column" style="animation: fadeInUp 0.6s ease; animation-fill-mode: both; animation-delay: 0.2s;">
+                        <h6 style="font-size: 0.95rem; font-weight: 800; color: #fff; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 0.5px; position: relative; padding-bottom: 12px; border-bottom: 2px solid rgba(39, 174, 96, 0.3);"><i class="fas fa-headset"></i> Support</h6>
+                        <ul style="list-style: none; padding: 0; margin: 0;">
+                            <li style="margin-bottom: 12px;"><a href="./FAQs.html" style="color: #aaa; text-decoration: none; font-size: 0.9rem; transition: color 0.3s ease;">FAQs</a></li>
+                            <li style="margin-bottom: 12px;"><a href="./index.html#contact" style="color: #aaa; text-decoration: none; font-size: 0.9rem; transition: color 0.3s ease;">Contact Us</a></li>
+                            <li style="margin-bottom: 12px;"><a href="./Partnership.html" style="color: #aaa; text-decoration: none; font-size: 0.9rem; transition: color 0.3s ease;">Partnership</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Contact Section -->
+                    <div class="footer-column" style="animation: fadeInUp 0.6s ease; animation-fill-mode: both; animation-delay: 0.3s;">
+                        <h6 style="font-size: 0.95rem; font-weight: 800; color: #fff; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 0.5px; position: relative; padding-bottom: 12px; border-bottom: 2px solid rgba(39, 174, 96, 0.3);"><i class="fas fa-phone-alt"></i> Contact Info</h6>
+                        <div style="display: flex; flex-direction: column; gap: 16px;">
+                            <div style="display: flex; gap: 12px; align-items: flex-start;">
+                                <i class="fas fa-phone" style="color: #27ae60; font-size: 1.1rem; margin-top: 2px; min-width: 20px;"></i>
+                                <div>
+                                    <p style="font-size: 0.75rem; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 3px; font-weight: 700;">Phone</p>
+                                    <a href="tel:+639177770851" style="color: #aaa; font-size: 0.9rem; text-decoration: none; transition: color 0.3s ease;">+63 917 777 0851</a>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 12px; align-items: flex-start;">
+                                <i class="fas fa-envelope" style="color: #27ae60; font-size: 1.1rem; margin-top: 2px; min-width: 20px;"></i>
+                                <div>
+                                    <p style="font-size: 0.75rem; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 3px; font-weight: 700;">Email</p>
+                                    <a href="mailto:Oikosorchardandfarm@gmail.com" style="color: #aaa; font-size: 0.9rem; text-decoration: none; transition: color 0.3s ease;">Oikosorchardandfarm@gmail.com</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Middle Section -->
+        <div style="padding: 40px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+            <div class="container" style="max-width: 1280px; margin: 0 auto; padding: 0 24px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; align-items: center;">
+                    <!-- Social Links -->
+                    <div style="text-align: center;">
+                        <h6 style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Follow Us</h6>
+                        <div style="display: flex; gap: 12px; justify-content: center;">
+                            <a href="https://www.facebook.com/profile.php?id=100083203516620" title="Facebook" style="display: inline-flex; align-items: center; justify-content: center; width: 45px; height: 45px; border-radius: 50%; background: rgba(255, 255, 255, 0.08); border: 2px solid rgba(255, 255, 255, 0.1); color: #fff; font-size: 1.1rem; transition: all 0.4s ease; text-decoration: none;">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="https://www.instagram.com/oiko.sorchardandfarm/" title="Instagram" style="display: inline-flex; align-items: center; justify-content: center; width: 45px; height: 45px; border-radius: 50%; background: rgba(255, 255, 255, 0.08); border: 2px solid rgba(255, 255, 255, 0.1); color: #fff; font-size: 1.1rem; transition: all 0.4s ease; text-decoration: none;">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/oikosorchard-andfarm-680b713aa/" title="LinkedIn" style="display: inline-flex; align-items: center; justify-content: center; width: 45px; height: 45px; border-radius: 50%; background: rgba(255, 255, 255, 0.08); border: 2px solid rgba(255, 255, 255, 0.1); color: #fff; font-size: 1.1rem; transition: all 0.4s ease; text-decoration: none;">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Bottom Section -->
+        <div style="padding: 40px 0 20px;">
+            <div class="container" style="max-width: 1280px; margin: 0 auto; padding: 0 24px;">
+                <div style="text-align: center;">
+                    <p style="color: #888; font-size: 0.9rem; margin: 0;">© 2026 Oikos Orchard & Farm. All rights reserved. | <a href="#" style="color: #888; text-decoration: none; transition: color 0.3s ease;">Privacy Policy</a> • <a href="#" style="color: #888; text-decoration: none; transition: color 0.3s ease;">Terms of Service</a></p>
+                    <p style="color: #666; font-size: 0.85rem; margin: 15px 0 0;">Made with <i class="fas fa-heart" style="color: #27ae60;"></i> for sustainable farming</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Add Font Awesome if not already included -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        .modern-footer {
+            background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 50%, #0d0f15 100%);
+            color: #fff;
+            padding-top: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modern-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(39, 174, 96, 0.5), transparent);
+        }
+
+        .footer-brand-section {
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .footer-column {
+            animation: fadeInUp 0.6s ease;
+            animation-fill-mode: both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .modern-footer {
+                padding-top: 40px;
+            }
+        }
+    </style>
+    
+    <!-- NoScript Message for Search Engines and Accessibility -->
+    <noscript>
+        <div style="background-color: #fff3cd; border: 1px solid #ffc107; border-radius: 4px; padding: 15px; margin: 20px; color: #856404;">
+            <h3 style="margin-top: 0;">JavaScript Required</h3>
+            <p>This marketplace application requires JavaScript to function properly. Please enable JavaScript in your browser to browse products, add items to cart, and place orders.</p>
+            <p><strong>For Search Engines:</strong> Bulk Buy OikosOF Marketplace offers 125+ premium organic products including native pork, fresh herbs, vegetables, spices, fruits, eggs, and beverages. Direct wholesale from Sibonga Cebu, serving businesses and organizations nationwide.</p>
+            <p>Visit <a href="index.html">our main website</a> for more information about Oikos Orchard & Farm.</p>
+        </div>
+    </noscript>
 </body>
 </html>
