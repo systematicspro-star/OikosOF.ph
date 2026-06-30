@@ -1,46 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <!-- Homepage - Highest Priority -->
-  <url>
   <!-- Homepage (canonical) -->
   <url>
     <loc>https://oikosof.netlify.app/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-06-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
-  <!-- Events Page -->
+  <!-- Events -->
   <url>
     <loc>https://oikosof.netlify.app/events</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-06-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
-  <!-- FAQs Page -->
+  <!-- FAQs -->
   <url>
     <loc>https://oikosof.netlify.app/faqs</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-06-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- Marketplace Page - High Priority for Business -->
+  <!-- Partnership -->
+  <url>
+    <loc>https://oikosof.netlify.app/partnership</loc>
+    <lastmod>2026-06-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Marketplace -->
   <url>
     <loc>https://oikosof.netlify.app/OikosMarketplace.html</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-06-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
-  <!-- Partnership Page -->
+  <!-- Article News -->
   <url>
-    <loc>https://oikosof.netlify.app/partnership</loc>
-    <lastmod>2026-06-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://oikosof.netlify.app/articlenews.html</loc>
+    <lastmod>2026-06-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- Bookings JSON (now crawlable) -->
+  <url>
+    <loc>https://oikosof.netlify.app/bookings.json</loc>
+    <lastmod>2026-06-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.1</priority>
   </url>
 
 </urlset>

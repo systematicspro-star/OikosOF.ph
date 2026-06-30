@@ -2,7 +2,8 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /private/
-Disallow: /*.json$
+# Allow JSON files to be crawled
+# Disallow: /*.json$
 
 Sitemap: https://oikosof.netlify.app/sitemap.xml
 
