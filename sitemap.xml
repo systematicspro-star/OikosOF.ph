@@ -13,7 +13,7 @@
 
   <!-- Events Page -->
   <url>
-    <loc>https://oikosof.netlify.app/Events.html</loc>
+    <loc>https://oikosof.netlify.app/events</loc>
     <lastmod>2026-06-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -21,7 +21,7 @@
 
   <!-- FAQs Page -->
   <url>
-    <loc>https://oikosof.netlify.app/FAQs.html</loc>
+    <loc>https://oikosof.netlify.app/faqs</loc>
     <lastmod>2026-06-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -37,7 +37,7 @@
 
   <!-- Partnership Page -->
   <url>
-    <loc>https://oikosof.netlify.app/Partnership.html</loc>
+    <loc>https://oikosof.netlify.app/partnership</loc>
     <lastmod>2026-06-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
