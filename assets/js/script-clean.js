@@ -14,6 +14,101 @@ function isValidEmail(email) {
     return emailRegex.test(email);
 }
 
+document.addEventListener('change', function(event) {
+    const target = event.target;
+    if (!target || target.id !== 'paymentScreenshot') {
+        return;
+    }
+
+    const preview = document.getElementById('paymentScreenshotPreview');
+    const wrapper = document.getElementById('paymentScreenshotPreviewWrap');
+    const file = target.files && target.files[0];
+
+    if (!preview || !wrapper || !file) {
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        preview.src = e.target.result;
+        wrapper.classList.remove('d-none');
+    };
+    reader.readAsDataURL(file);
+});
+
+function initGalleryInteractions() {
+    const shareButtons = document.querySelectorAll('[data-action="share"]');
+    const saveButtons = document.querySelectorAll('[data-action="save"]');
+    const showPhotosButtons = document.querySelectorAll('.show-photos-btn');
+    const galleryModal = document.getElementById('photoGalleryModal');
+    const galleryGrid = document.getElementById('galleryModalGrid');
+
+    const galleryImages = [
+        'assets/images/image.png',
+        'assets/images/Glamping.jpg',
+        'assets/images/oikos (1).jpg',
+        'assets/images/Car Glamping.jpg',
+        'assets/images/Seedlings.jpg',
+        'assets/images/Tour Guide.jpg',
+        'assets/images/656721120_939751078808334_6703760845923348850_n.jpg'
+    ];
+
+    if (galleryGrid) {
+        galleryGrid.innerHTML = galleryImages.map(src => `
+            <img src="${src}" alt="Oikos Orchard and Farm photo" loading="lazy">
+        `).join('');
+    }
+
+    shareButtons.forEach(button => {
+        button.addEventListener('click', async function() {
+            const shareText = button.innerHTML;
+            const url = window.location.href;
+
+            try {
+                if (navigator.clipboard && window.isSecureContext) {
+                    await navigator.clipboard.writeText(url);
+                } else {
+                    const tempInput = document.createElement('input');
+                    tempInput.value = url;
+                    document.body.appendChild(tempInput);
+                    tempInput.select();
+                    document.execCommand('copy');
+                    tempInput.remove();
+                }
+                button.innerHTML = '<i class="fas fa-check"></i> Link copied';
+                setTimeout(() => {
+                    button.innerHTML = shareText;
+                }, 1200);
+            } catch (error) {
+                window.prompt('Copy this link:', url);
+            }
+        });
+    });
+
+    saveButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const isSaved = button.classList.toggle('saved');
+            button.innerHTML = isSaved
+                ? '<i class="fas fa-heart"></i> Saved'
+                : '<i class="fas fa-heart"></i> Save';
+            button.setAttribute('aria-pressed', String(isSaved));
+        });
+    });
+
+    showPhotosButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            if (galleryModal) {
+                const modal = new bootstrap.Modal(galleryModal);
+                modal.show();
+            }
+        });
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    initGalleryInteractions();
+});
+
 // Update price display based on package and dates
 function updatePrice() {
     const packageSelect = document.getElementById('packageName');
@@ -22,34 +117,108 @@ function updatePrice() {
     const guestsInput = document.getElementById('bookingGuests');
     const tentsInput = document.getElementById('bookingTents');
     const displayPriceEl = document.getElementById('displayPrice');
+    const cardPriceEl = document.querySelector('.card-price');
+    const cardNightEl = document.querySelector('.card-night');
     
     if (!packageSelect || !displayPriceEl) return;
     
     const selectedValue = packageSelect.value;
     const checkInDate = checkInInput ? checkInInput.value : '';
     const checkOutDate = checkOutInput ? checkOutInput.value : '';
-    const guests = parseInt(guestsInput?.value || 0);
-    const tents = parseInt(tentsInput?.value || 0);
+    const extraGuests = parseInt(guestsInput?.value || 0, 10);
+    const tents = parseInt(tentsInput?.value || 0, 10);
+    const extraGuestCount = Number.isFinite(extraGuests) && extraGuests > 0 ? extraGuests : 0;
     
     if (!selectedValue) {
         displayPriceEl.textContent = '---';
+        if (cardPriceEl) cardPriceEl.textContent = '₱3,800';
+        if (cardNightEl) cardNightEl.textContent = '/ night';
         const amountInput = document.getElementById('amountToPay');
         if (amountInput) amountInput.value = '';
         return;
     }
     
     const parts = selectedValue.split('|');
-    if (parts.length !== 2) {
+    if (parts.length < 2) {
         displayPriceEl.textContent = '---';
+        if (cardPriceEl) cardPriceEl.textContent = '₱3,800';
+        if (cardNightEl) cardNightEl.textContent = '/ night';
         const amountInput = document.getElementById('amountToPay');
         if (amountInput) amountInput.value = '';
         return;
     }
-    
-    const pricePerNight = parseInt(parts[1]);
-    const guestAddOn = guests * 400;  // 400 per guest
-    const tentAddOn = tents * 500;    // 500 per tent
-    const addOnsTotal = guestAddOn + tentAddOn;
+
+    const priceValue = parseInt(parts[1], 10) || 0;
+    const pricingUnit = (parts[2] || 'night').toLowerCase();
+    const formattedPrice = '₱' + priceValue.toLocaleString('en-US');
+
+    const guestAddOnRate = (() => {
+        const selectedText = packageSelect.value || '';
+        if (selectedText.includes('Couple Small Package') || selectedText.includes('Barkada Package') || selectedText.includes('Family Package') || selectedText.includes('Exclusive Camp')) return 1000;
+        if (selectedText.includes('Car Camping') || selectedText.includes('DIY Camping') || selectedText.includes('Group Camping Package')) return 300;
+        return 0;
+    })();
+
+    const guestAddOnTotal = extraGuestCount * guestAddOnRate;
+    const addOnsTotal = guestAddOnTotal;
+
+    if (cardPriceEl) {
+        cardPriceEl.textContent = formattedPrice;
+    }
+
+    if (cardNightEl) {
+        if (pricingUnit === 'person-day') cardNightEl.textContent = '/ person';
+        else if (pricingUnit === 'person-night') cardNightEl.textContent = '/ person / night';
+        else if (pricingUnit === 'package') cardNightEl.textContent = '/ package';
+        else cardNightEl.textContent = '/ night';
+    }
+
+    if (pricingUnit === 'person-day') {
+        const baseTotal = priceValue * Math.max(1, extraGuestCount || 1);
+        const totalAmount = baseTotal + guestAddOnTotal;
+        const formattedTotal = '₱' + totalAmount.toLocaleString('en-US');
+        const label = extraGuestCount > 0 ? `(${extraGuestCount} guest add-on)` : '(1 guest)';
+        displayPriceEl.innerHTML = formattedTotal + ' <small style="font-size: 0.8em; opacity: 0.8;">' + label + '</small>';
+        displayPriceEl.style.color = '#27ae60';
+        displayPriceEl.style.fontWeight = 'bold';
+        const amountInput = document.getElementById('amountToPay');
+        if (amountInput) amountInput.value = totalAmount;
+        return;
+    }
+
+    if (pricingUnit === 'person-night') {
+        let numberOfNights = 1;
+        if (checkInDate && checkOutDate) {
+            const checkIn = new Date(checkInDate);
+            const checkOut = new Date(checkOutDate);
+            const diffTime = checkOut - checkIn;
+            numberOfNights = Math.max(1, Math.ceil(diffTime / (1000 * 60 * 60 * 24)));
+        }
+
+        const baseTotal = priceValue * Math.max(1, extraGuestCount || 1) * numberOfNights;
+        const totalAmount = baseTotal + guestAddOnTotal;
+        const formattedTotal = '₱' + totalAmount.toLocaleString('en-US');
+        const nightText = numberOfNights > 1 ? 'nights' : 'night';
+        const addOnText = extraGuestCount > 0 ? ' + ' + extraGuestCount + ' guest add-on' : '';
+        displayPriceEl.innerHTML = formattedTotal + ' <small style="font-size: 0.8em; opacity: 0.8;">(' + Math.max(1, extraGuestCount || 1) + ' guest' + (extraGuestCount > 1 || extraGuestCount === 0 ? 's' : '') + ' × ' + numberOfNights + ' ' + nightText + addOnText + ')</small>';
+        displayPriceEl.style.color = '#27ae60';
+        displayPriceEl.style.fontWeight = 'bold';
+        const amountInput = document.getElementById('amountToPay');
+        if (amountInput) amountInput.value = totalAmount;
+        return;
+    }
+
+    if (pricingUnit === 'package') {
+        const totalAmount = priceValue + guestAddOnTotal;
+        const formattedTotal = '₱' + totalAmount.toLocaleString('en-US');
+        const addOnText = extraGuestCount > 0 ? ' + ' + extraGuestCount + ' guest add-on' : '';
+        displayPriceEl.innerHTML = formattedTotal + ' <small style="font-size: 0.8em; opacity: 0.8;">/package' + addOnText + '</small>';
+        displayPriceEl.style.color = '#27ae60';
+        displayPriceEl.style.fontWeight = 'bold';
+        const amountInput = document.getElementById('amountToPay');
+        if (amountInput) amountInput.value = totalAmount;
+        return;
+    }
     
     if (checkInDate && checkOutDate) {
         const checkIn = new Date(checkInDate);
@@ -58,48 +227,81 @@ function updatePrice() {
         const numberOfNights = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         
         if (numberOfNights > 0) {
-            const packageTotal = numberOfNights * pricePerNight;
+            const packageTotal = numberOfNights * priceValue;
             const totalAmount = packageTotal + addOnsTotal;
-            const formattedPrice = '₱' + totalAmount.toLocaleString('en-US');
+            const formattedTotal = '₱' + totalAmount.toLocaleString('en-US');
             const nightText = numberOfNights > 1 ? 'nights' : 'night';
             const breakdownText = addOnsTotal > 0 ? ` + Add Ons: ₱${addOnsTotal.toLocaleString('en-US')}` : '';
-            displayPriceEl.innerHTML = formattedPrice + ' <small style="font-size: 0.8em; opacity: 0.8;">(' + numberOfNights + ' ' + nightText + breakdownText + ')</small>';
+            displayPriceEl.innerHTML = formattedTotal + ' <small style="font-size: 0.8em; opacity: 0.8;">(' + numberOfNights + ' ' + nightText + breakdownText + ')</small>';
             displayPriceEl.style.color = '#27ae60';
             displayPriceEl.style.fontWeight = 'bold';
-            
-            // Store the amount in hidden input for form submission
             const amountInput = document.getElementById('amountToPay');
             if (amountInput) amountInput.value = totalAmount;
         }
     } else {
-        const totalAmount = pricePerNight + addOnsTotal;
-        const formattedPrice = '₱' + totalAmount.toLocaleString('en-US');
+        const totalAmount = priceValue + addOnsTotal;
+        const formattedTotal = '₱' + totalAmount.toLocaleString('en-US');
         const breakdownText = addOnsTotal > 0 ? ` + Add Ons: ₱${addOnsTotal.toLocaleString('en-US')}` : '';
-        displayPriceEl.innerHTML = formattedPrice + ' <small style="font-size: 0.8em; opacity: 0.8;">per night' + breakdownText + '</small>';
+        displayPriceEl.innerHTML = formattedTotal + ' <small style="font-size: 0.8em; opacity: 0.8;">per night' + breakdownText + '</small>';
         displayPriceEl.style.color = '#27ae60';
         displayPriceEl.style.fontWeight = 'bold';
-        
-        // Store the amount in hidden input for form submission
         const amountInput = document.getElementById('amountToPay');
         if (amountInput) amountInput.value = totalAmount;
     }
 }
 
-// Formspree booking submission
+// Payment modal flow
+window.showBookingConfirmationAgain = function() {
+    const paymentModal = bootstrap.Modal.getInstance(document.getElementById('paymentModal'));
+    if (paymentModal) {
+        paymentModal.hide();
+    }
+
+    const confirmationModal = new bootstrap.Modal(document.getElementById('bookingConfirmationModal'));
+    setTimeout(() => {
+        confirmationModal.show();
+    }, 250);
+};
+
 window.confirmAndSubmitBooking = function() {
     if (!window.pendingBookingForm || !window.pendingFormData) {
         console.error('No pending booking data');
         return;
     }
 
-    const bookingForm = window.pendingBookingForm;
-    const submitBtn = bookingForm.querySelector('button[type="submit"]');
-    const messageDiv = document.getElementById('formMessage');
-    
-    // Hide confirmation modal
     const confirmationModal = bootstrap.Modal.getInstance(document.getElementById('bookingConfirmationModal'));
     if (confirmationModal) {
         confirmationModal.hide();
+    }
+
+    const paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
+    paymentModal.show();
+};
+
+window.submitPaymentProof = function() {
+    const bookingForm = window.pendingBookingForm;
+    if (!bookingForm) {
+        console.error('No pending booking form');
+        return;
+    }
+
+    const paymentInput = document.getElementById('paymentScreenshot');
+    if (!paymentInput || !paymentInput.files || !paymentInput.files.length) {
+        alert('Please upload your transaction screenshot before continuing.');
+        return;
+    }
+
+    const file = paymentInput.files[0];
+    if (!file.type.startsWith('image/')) {
+        alert('Please upload a valid image file for your transaction screenshot.');
+        return;
+    }
+
+    const submitBtn = bookingForm.querySelector('button[type="submit"]');
+    const messageDiv = document.getElementById('formMessage');
+    const paymentModal = bootstrap.Modal.getInstance(document.getElementById('paymentModal'));
+    if (paymentModal) {
+        paymentModal.hide();
     }
 
     if (submitBtn) {
@@ -107,18 +309,14 @@ window.confirmAndSubmitBooking = function() {
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
     }
 
-    // Submit form directly to Formspree (avoids CORS issues)
-    // Use native form submission instead of Fetch
-    console.log('✅ Submitting booking form to Formspree...');
-    
     if (messageDiv) {
         messageDiv.style.display = 'block';
         messageDiv.style.backgroundColor = '#d4edda';
         messageDiv.style.color = '#155724';
-        messageDiv.innerHTML = '✅ Submitting your booking...<br>Please wait while we process your request.';
+        messageDiv.innerHTML = '✅ Payment proof uploaded.<br>Submitting your booking request...';
     }
 
-    // Submit the form (Formspree will handle the POST)
+    console.log('✅ Submitting booking form to Formspree after payment proof upload...');
     setTimeout(() => {
         bookingForm.submit();
     }, 300);

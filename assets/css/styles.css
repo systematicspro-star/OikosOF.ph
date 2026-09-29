@@ -1722,6 +1722,493 @@ section {
    ECOMMERCE BOOKING FORM STYLES
    ================================ */
 
+/* Airbnb-Style Listing Booking Modal */
+.listing-booking-modal {
+    max-width: 1200px;
+}
+
+.listing-booking-content {
+    border-radius: 28px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+}
+
+.listing-booking-body {
+    position: relative;
+    padding: 24px 28px 32px !important;
+}
+
+.listing-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+    z-index: 3;
+    opacity: 1;
+}
+
+.listing-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0 18px;
+}
+
+.listing-title {
+    font-size: clamp(2rem, 3vw, 2.6rem);
+    font-weight: 800;
+    margin: 0;
+    color: #1f1f1f;
+}
+
+.listing-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.listing-action-btn {
+    border: 1px solid rgba(0,0,0,0.12);
+    background: #fff;
+    border-radius: 999px;
+    padding: 9px 14px;
+    font-weight: 600;
+    color: #222;
+}
+
+.listing-action-btn.saved {
+    background: #fff1f3;
+    border-color: #ff385c;
+    color: #d91f4d;
+}
+
+.listing-gallery-grid {
+    display: grid;
+    grid-template-columns: 1.55fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.gallery-main {
+    height: 390px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.gallery-main img,
+.gallery-tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.gallery-stack {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    height: 390px;
+}
+
+.gallery-tile {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    min-height: 180px;
+}
+
+.show-photos-btn {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    background: rgba(255, 255, 255, 0.92);
+    border: none;
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-weight: 700;
+    color: #222;
+}
+
+.listing-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(300px, 420px);
+    gap: 28px;
+    align-items: start;
+}
+
+.listing-main-col {
+    padding-right: 12px;
+}
+
+.listing-subtitle {
+    font-size: clamp(1.8rem, 2vw, 2.3rem);
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #222;
+}
+
+.meta-row {
+    color: #666;
+    font-size: 1.05rem;
+    margin-bottom: 8px;
+}
+
+.reviews-line {
+    color: #222;
+    font-weight: 600;
+    margin-bottom: 22px;
+}
+
+.reviews-line i {
+    color: #ff385c;
+    margin-right: 6px;
+}
+
+.host-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    margin-bottom: 18px;
+}
+
+.host-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #f3f3f3, #dfe7ea);
+    color: #333;
+}
+
+.host-title {
+    font-weight: 700;
+    color: #222;
+}
+
+.host-time {
+    color: #666;
+    font-size: 0.92rem;
+}
+
+.feature-list {
+    border-top: 1px solid rgba(0,0,0,0.08);
+    padding-top: 18px;
+    display: grid;
+    gap: 18px;
+}
+
+.feature-item {
+    display: flex;
+    gap: 14px;
+    align-items: start;
+}
+
+.feature-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: #f5f5f5;
+    display: grid;
+    place-items: center;
+    color: #222;
+    flex-shrink: 0;
+}
+
+.feature-item strong,
+.feature-item span {
+    display: block;
+}
+
+.feature-item strong {
+    color: #222;
+    margin-bottom: 2px;
+}
+
+.feature-item span {
+    color: #666;
+    line-height: 1.45;
+}
+
+.booking-summary-card {
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+    background: #fff;
+    position: sticky;
+    top: 24px;
+}
+
+.booking-price-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.card-price {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #1f1f1f;
+}
+
+.card-night {
+    color: #666;
+    font-weight: 600;
+}
+
+.card-rating {
+    color: #333;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.booking-inputs {
+    display: grid;
+    gap: 12px;
+}
+
+.booking-date-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.field-group label {
+    color: #222;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.field-group input,
+.field-group select,
+.field-group textarea {
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 0.97rem;
+    background: #fff;
+}
+
+.field-group input:focus,
+.field-group select:focus,
+.field-group textarea:focus {
+    border-color: rgba(0, 0, 0, 0.2);
+    box-shadow: none;
+    outline: none;
+}
+
+.book-now-btn {
+    width: 100%;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #ff385c 0%, #d91f4d 100%);
+    color: white;
+    font-weight: 700;
+    padding: 15px 20px;
+    margin-top: 18px;
+    box-shadow: 0 12px 24px rgba(255, 56, 92, 0.2);
+}
+
+.card-report-link {
+    text-align: center;
+    color: #666;
+    margin-top: 16px;
+    font-size: 0.9rem;
+}
+
+.booking-extra-form {
+    margin-top: 32px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    display: grid;
+    gap: 18px;
+}
+
+.extra-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.char-counter-inline {
+    display: inline-block;
+    margin-top: 6px;
+    color: #666;
+    font-size: 0.8rem;
+}
+
+.booking-submit-area {
+    margin-top: 10px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+}
+
+.gallery-modal-dialog {
+    max-width: 1100px;
+}
+
+.gallery-modal-content {
+    border-radius: 22px;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 26px 60px rgba(0,0,0,0.18);
+}
+
+.gallery-modal-header {
+    padding: 18px 22px 10px;
+    background: #fff;
+}
+
+.gallery-modal-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #222;
+}
+
+.gallery-modal-body {
+    padding: 0 22px 22px;
+    background: #fff;
+}
+
+.gallery-modal-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.gallery-modal-grid img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    display: block;
+    border-radius: 14px;
+}
+
+.price-label {
+    display: block;
+    font-size: 0.8rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.display-price {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #1f1f1f;
+}
+
+.form-message {
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 0.92rem;
+    display: none;
+    background: #eafaf0;
+    color: #0b6d42;
+    border: 1px solid rgba(11,109,66,0.16);
+}
+
+@media (max-width: 991.98px) {
+    .listing-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .booking-summary-card {
+        position: static;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .listing-booking-body {
+        padding: 18px 16px 24px !important;
+    }
+
+    .listing-header-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .listing-actions {
+        width: 100%;
+    }
+
+    .listing-action-btn {
+        flex: 1;
+        text-align: center;
+    }
+
+    .listing-gallery-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery-stack {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        height: auto;
+    }
+
+    .booking-date-grid,
+    .extra-row {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery-modal-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .listing-title {
+        font-size: 1.8rem;
+    }
+
+    .listing-subtitle {
+        font-size: 1.5rem;
+    }
+
+    .gallery-main {
+        height: 240px;
+    }
+
+    .gallery-tile {
+        min-height: 130px;
+    }
+
+    .card-price {
+        font-size: 1.6rem;
+    }
+
+    .show-photos-btn {
+        right: 8px;
+        bottom: 8px;
+        padding: 7px 10px;
+        font-size: 0.74rem;
+    }
+
+    .gallery-modal-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* Modal Customization */
 .ecommerce-modal {
     max-height: 95vh;

@@ -1511,8 +1511,9 @@ function showSuccessModal(title, message) {
                     </svg>
 
 /**
- * Update price display based on selected package and dates
- * Calculates: Total = (Number of Nights) × (Package Price)
+ * Update price display based on selected package and dates.
+ * Some packages are priced per night, while others are day-use, per-person,
+ * or package-based rates.
  */
 function updatePrice() {
     const packageSelect = document.getElementById('packageName');
@@ -1534,46 +1535,60 @@ function updatePrice() {
         return;
     }
     
-    // Parse price from package value (format: "Package Name|Price")
+    // Parse package value: "Package Name|Price|unit"
     const parts = selectedValue.split('|');
-    if (parts.length !== 2) {
+    if (parts.length < 2) {
         displayPriceEl.textContent = '---';
         displayPriceEl.style.color = '#999';
         displayPriceEl.style.fontWeight = 'normal';
         return;
     }
     
-    const pricePerNight = parseInt(parts[1]);
+    const packagePrice = parseInt(parts[1], 10) || 0;
+    const pricingUnit = (parts[2] || 'night').toLowerCase();
+    const formattedPrice = '₱' + packagePrice.toLocaleString('en-US');
     
-    // If both dates are selected, calculate total
+    const nightOnlyModes = ['night', 'package'];
+    const personModes = ['person-day', 'person-night'];
+
+    // For day-use / per-person packages, do not multiply by nights
+    if (personModes.includes(pricingUnit)) {
+        const unitLabel = pricingUnit === 'person-day' ? '/person' : '/person/night';
+        displayPriceEl.innerHTML = formattedPrice + ' <small style="font-size: 0.8em; opacity: 0.8;">' + unitLabel + '</small>';
+        displayPriceEl.style.color = '#27ae60';
+        displayPriceEl.style.fontWeight = 'bold';
+        return;
+    }
+
+    if (pricingUnit === 'package') {
+        displayPriceEl.innerHTML = formattedPrice + ' <small style="font-size: 0.8em; opacity: 0.8;">/package</small>';
+        displayPriceEl.style.color = '#27ae60';
+        displayPriceEl.style.fontWeight = 'bold';
+        return;
+    }
+
+    // If both dates are selected, calculate total for night-based packages
     if (checkInDate && checkOutDate) {
         const checkIn = new Date(checkInDate);
         const checkOut = new Date(checkOutDate);
-        
-        // Calculate number of nights
         const diffTime = checkOut - checkIn;
         const numberOfNights = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         
         if (numberOfNights > 0) {
-            // Calculate total: nights × price per night
-            const totalAmount = numberOfNights * pricePerNight;
-            const formattedPrice = '₱' + totalAmount.toLocaleString('en-US');
+            const totalAmount = numberOfNights * packagePrice;
+            const totalText = '₱' + totalAmount.toLocaleString('en-US');
             const nightText = numberOfNights > 1 ? 'nights' : 'night';
-            
-            // Display: "₱XXX,XXX (X nights)"
-            displayPriceEl.innerHTML = formattedPrice + ' <small style="font-size: 0.8em; opacity: 0.8;">(' + numberOfNights + ' ' + nightText + ')</small>';
+            displayPriceEl.innerHTML = totalText + ' <small style="font-size: 0.8em; opacity: 0.8;">(' + numberOfNights + ' ' + nightText + ')</small>';
             displayPriceEl.style.color = '#27ae60';
             displayPriceEl.style.fontWeight = 'bold';
         } else {
-            // Check-out date is before or same as check-in date
             displayPriceEl.textContent = 'Invalid dates';
             displayPriceEl.style.color = '#dc3545';
             displayPriceEl.style.fontWeight = 'bold';
         }
     } else {
-        // Only package is selected, show price per night
-        const formattedPrice = '₱' + pricePerNight.toLocaleString('en-US');
-        displayPriceEl.innerHTML = formattedPrice + ' <small style="font-size: 0.8em; opacity: 0.8;">per night</small>';
+        const suffix = nightOnlyModes.includes(pricingUnit) ? 'per night' : '/night';
+        displayPriceEl.innerHTML = formattedPrice + ' <small style="font-size: 0.8em; opacity: 0.8;">' + suffix + '</small>';
         displayPriceEl.style.color = '#27ae60';
         displayPriceEl.style.fontWeight = 'bold';
     }
