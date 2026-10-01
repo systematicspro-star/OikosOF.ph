@@ -27,6 +27,15 @@ body {
     line-height: 1.6;
 }
 
+audio {
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+}
+
+audio:hover {
+  opacity: 1.0;
+}
+
 /* ================================
    NAVBAR STYLES
    ================================ */

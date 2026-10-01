@@ -244,6 +244,37 @@ s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
 <!--End of Tawk.to Script-->
+
+    <!-- Hidden Audio Element -->
+    <audio id="bg-audio" autoplay loop preload="auto" muted playsinline style="position: fixed; width: 1px; height: 1px; opacity: 0; pointer-events: none; left: -9999px; top: -9999px; z-index: -1;">
+      <source src="./assets/images/Hugyaw_sa_Bukid (1).mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const audio = document.getElementById("bg-audio");
+        if (!audio) return;
+
+        const tryPlay = function() {
+          audio.muted = false;
+          const playPromise = audio.play();
+          if (playPromise && playPromise.catch) {
+            playPromise.catch(function() {
+              audio.muted = true;
+              audio.play();
+            });
+          }
+        };
+
+        tryPlay();
+
+        ["pointerdown", "touchstart", "keydown", "click", "wheel"].forEach(function(eventName) {
+          document.addEventListener(eventName, tryPlay, { once: true });
+        });
+      });
+    </script>
+
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light sticky-top shadow-sm" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);">
         <div class="container">
